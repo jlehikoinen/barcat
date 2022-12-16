@@ -68,6 +68,7 @@ extension Host {
     static let exampleHosts = [
         Host(id: UUID().uuidString, name: "1.1.1.1", port: Port(id: "00000000-0000-0000-0000-000000000080", number: 80, description: "http")),
         Host(id: UUID().uuidString, name: "il.fi", port: Port(id: Port.factoryHttpsPortUuid, number: 443, description: "https")),
-        Host(id: UUID().uuidString, name: "is.fi", port: Port(id: Port.factoryHttpsPortUuid, number: 443, description: "https"))
+        Host(id: UUID().uuidString, name: "is.fi", port: Port(id: Port.factoryHttpsPortUuid, number: 443, description: "https")),
+        Host(id: UUID().uuidString, name: "50-courier.push.apple.com", port: Port(id: "00000000-0000-0000-0000-000000005223", number: 5223, description: "APNs client"))
     ]
 }
