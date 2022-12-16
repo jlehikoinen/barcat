@@ -121,7 +121,8 @@ struct FavoritesEditView: View {
                     Button("Add") {
                         saveNewHost()
                     }
-                    .disabled(barCatStore.newHost.validationStatus == .invalidHostname)
+                    .disabled(barCatStore.newHost.validationStatus != .noError)
+                    .keyboardShortcut(.defaultAction)
                 }
             }
             HostnameErrorView(host: barCatStore.debouncedNewHost, location: .editFavoritesNewHostView)

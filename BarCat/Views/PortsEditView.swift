@@ -123,6 +123,7 @@ struct PortsEditView: View {
                         addNewPort()
                     }
                     .disabled(newPort.validationStatus != .noError)
+                    .keyboardShortcut(.defaultAction)
                 }
             }
             portErrorView
