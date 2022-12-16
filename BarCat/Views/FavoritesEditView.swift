@@ -80,7 +80,7 @@ struct FavoritesEditView: View {
             
             TableColumn("Delete") { $host in
                 Button {
-                    // Alert is difficult to implement because of Table's host (binding) identification problems
+                    // Delete confirmation alert is difficult to implement because of Table's host (binding) identification problems
                     delete(host)
                 } label: {
                     Image(systemName: "trash")
@@ -93,7 +93,6 @@ struct FavoritesEditView: View {
     
     var addNewHostRow: some View {
         
-        // TODO: Replace with grid
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {

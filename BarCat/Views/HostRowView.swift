@@ -36,7 +36,6 @@ struct HostRowView: View {
                 .border(barCatStore.stateHighlightColor)
                 .disabled(barCatStore.commandState == .loading)
                 .onChange(of: barCatStore.activeHost) { host in
-                    // Use debounced active host for resetting label?
                     barCatStore.resetHightlightAndCommandOutputLabel()
                     barCatStore.validateInput(for: host, in: .mainHostRowView)
                 }
