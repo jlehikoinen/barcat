@@ -21,10 +21,10 @@ struct BarCatApp: App {
         MenuBarExtra("BarCat", systemImage: "pawprint.circle") {
             MenuBarWindowView()
                 .environmentObject(barCatStore)
-                .frame(minWidth: 350,
-                       maxWidth: 350,
-                       minHeight: 260,
-                       maxHeight: 260)
+                .frame(minWidth: 380,
+                       maxWidth: 380,
+                       minHeight: 280,
+                       maxHeight: 280)
         }
         .menuBarExtraStyle(.window)
     }
