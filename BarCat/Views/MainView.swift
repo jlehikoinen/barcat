@@ -13,7 +13,7 @@ struct MainView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HostRowView()
+            MainHostInputView()
             CommandOutputView()
             Divider()
                 .foregroundColor(.purple)

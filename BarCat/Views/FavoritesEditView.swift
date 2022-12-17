@@ -54,7 +54,7 @@ struct FavoritesEditView: View {
                             // print(debouncedHost)
                         }
                         .padding(.vertical, 4)
-                    HostnameErrorView(host: host, location: .editFavoritesRowView)
+                    HostnameRowErrorView(host: host)
                 }
             }
             .width(min: 120, ideal: 120, max: 140)

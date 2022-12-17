@@ -1,5 +1,5 @@
 //
-//  HostRowView.swift
+//  MainHostInputView.swift
 //  BarCat
 //
 //  Created by Janne Lehikoinen on 23.9.2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HostRowView: View {
+struct MainHostInputView: View {
     
     let processUtility = ProcessUtility()
     
@@ -122,6 +122,6 @@ struct HostRowView: View {
 
 struct HostRowView_Previews: PreviewProvider {
     static var previews: some View {
-        HostRowView()
+        MainHostInputView()
     }
 }
