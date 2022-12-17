@@ -10,6 +10,7 @@
 		68006E43291BDE820022CEAB /* FavoritesEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68006E42291BDE820022CEAB /* FavoritesEditView.swift */; };
 		6808DE112949E4FB007A62D7 /* HostValidationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6808DE102949E4FB007A62D7 /* HostValidationStatus.swift */; };
 		680BE07E28EFF6D300144D57 /* CommandState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680BE07D28EFF6D300144D57 /* CommandState.swift */; };
+		681A7AA1294DEFA500989048 /* PortErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681A7AA0294DEFA500989048 /* PortErrorView.swift */; };
 		682D9D982934A5F400DA0D04 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D9D972934A5F400DA0D04 /* AppState.swift */; };
 		68356609294BA39900F9A9EC /* PortValidationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68356608294BA39900F9A9EC /* PortValidationStatus.swift */; };
 		6835660B294C5B4E00F9A9EC /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6835660A294C5B4E00F9A9EC /* CustomFont.swift */; };
@@ -53,6 +54,7 @@
 		68006E42291BDE820022CEAB /* FavoritesEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesEditView.swift; sourceTree = "<group>"; };
 		6808DE102949E4FB007A62D7 /* HostValidationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostValidationStatus.swift; sourceTree = "<group>"; };
 		680BE07D28EFF6D300144D57 /* CommandState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandState.swift; sourceTree = "<group>"; };
+		681A7AA0294DEFA500989048 /* PortErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortErrorView.swift; sourceTree = "<group>"; };
 		682D9D972934A5F400DA0D04 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		68356608294BA39900F9A9EC /* PortValidationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortValidationStatus.swift; sourceTree = "<group>"; };
 		6835660A294C5B4E00F9A9EC /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				68006E42291BDE820022CEAB /* FavoritesEditView.swift */,
 				68858B1D29431568001AFBAD /* HostnameErrorView.swift */,
 				68F4B60729279B5D000B097C /* PortsEditView.swift */,
+				681A7AA0294DEFA500989048 /* PortErrorView.swift */,
 				68C3B1B62918F7F30045EDAD /* SettingsView.swift */,
 			);
 			path = Views;
@@ -330,6 +333,7 @@
 				68F4B60829279B5D000B097C /* PortsEditView.swift in Sources */,
 				6808DE112949E4FB007A62D7 /* HostValidationStatus.swift in Sources */,
 				683EBE6D28DC339500401861 /* BarCatApp.swift in Sources */,
+				681A7AA1294DEFA500989048 /* PortErrorView.swift in Sources */,
 				6838F72E28DDA497005819B7 /* FavoritesView.swift in Sources */,
 				68C3B1B52918F7B10045EDAD /* HeaderView.swift in Sources */,
 				68C3B1B72918F7F30045EDAD /* SettingsView.swift in Sources */,

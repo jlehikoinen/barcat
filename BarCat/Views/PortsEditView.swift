@@ -127,33 +127,7 @@ struct PortsEditView: View {
                     .keyboardShortcut(.defaultAction)
                 }
             }
-            portErrorView
-        }
-    }
-    
-    var portErrorView: some View {
-        
-        HStack {
-            switch debouncedNewPort.validationStatus {
-            case .duplicate:
-                Text(PortValidationStatus.duplicate.description)
-                    .captionRed()
-            case .emptyPortNumber:
-                Text(PortValidationStatus.emptyPortNumber.description)
-                    .font(.caption)
-                    .opacity(0)
-            case .invalidPortNumber:
-                Text(PortValidationStatus.invalidPortNumber.description)
-                    .captionRed()
-            case .valid:
-                Text(PortValidationStatus.valid.description)
-                    .font(.caption)
-                    .opacity(0)
-            case .none:
-                Text(PortValidationStatus.emptyPortNumber.description)
-                    .font(.caption)
-                    .opacity(0)
-            }
+            PortErrorView(port: debouncedNewPort)
         }
     }
     
