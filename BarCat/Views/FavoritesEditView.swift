@@ -121,7 +121,7 @@ struct FavoritesEditView: View {
                     Button("Add") {
                         saveNewHost()
                     }
-                    .disabled(barCatStore.newHost.validationStatus != .noError)
+                    .disabled(barCatStore.newHost.validationStatus != .valid)
                     .keyboardShortcut(.defaultAction)
                 }
             }

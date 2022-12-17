@@ -109,7 +109,7 @@ class BarCatStore: ObservableObject {
             host.validationStatus = hostRowValidator(newHost)
             favoriteHosts[index] = host
             
-            if host.validationStatus == .noError {
+            if host.validationStatus == .valid {
                 appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.FavoriteHosts)
             }
         }
@@ -194,7 +194,7 @@ class BarCatStore: ObservableObject {
             return .invalidHostname
         }
         
-        return .noError
+        return .valid
     }
     
     func hostRowValidator(_ host: Host) -> HostValidationStatus {
@@ -216,7 +216,7 @@ class BarCatStore: ObservableObject {
             return .invalidHostname
         }
         
-        return .noError
+        return .valid
     }
     
     func validateInput(for newPort: Port) -> PortValidationStatus {
@@ -240,7 +240,7 @@ class BarCatStore: ObservableObject {
             return .invalidPortNumber
         }
         
-        return .noError
+        return .valid
     }
     
     // MARK: Duplicates

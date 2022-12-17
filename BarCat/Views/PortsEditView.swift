@@ -87,6 +87,7 @@ struct PortsEditView: View {
     }
     
     var addNewPortRow: some View {
+        
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
@@ -122,7 +123,7 @@ struct PortsEditView: View {
                     Button("Add") {
                         addNewPort()
                     }
-                    .disabled(newPort.validationStatus != .noError)
+                    .disabled(newPort.validationStatus != .valid)
                     .keyboardShortcut(.defaultAction)
                 }
             }
@@ -133,18 +134,25 @@ struct PortsEditView: View {
     var portErrorView: some View {
         
         HStack {
-            
             switch debouncedNewPort.validationStatus {
             case .duplicate:
-                Text("Duplicate port number")
+                Text(PortValidationStatus.duplicate.description)
                     .captionRed()
+            case .emptyPortNumber:
+                Text(PortValidationStatus.emptyPortNumber.description)
+                    .font(.caption)
+                    .opacity(0)
             case .invalidPortNumber:
-                Text("Invalid port number")
+                Text(PortValidationStatus.invalidPortNumber.description)
                     .captionRed()
-            case .noError:
-                EmptyView()
+            case .valid:
+                Text(PortValidationStatus.valid.description)
+                    .font(.caption)
+                    .opacity(0)
             case .none:
-                EmptyView()
+                Text(PortValidationStatus.emptyPortNumber.description)
+                    .font(.caption)
+                    .opacity(0)
             }
         }
     }

@@ -12,7 +12,7 @@ enum HostValidationStatus: Codable {
     case duplicate
     case emptyHostname
     case invalidHostname
-    case noError
+    case valid
     
     var description: String {
         
@@ -20,7 +20,7 @@ enum HostValidationStatus: Codable {
         case .duplicate: return "Duplicate host"
         case .emptyHostname: return "Hostname missing"
         case .invalidHostname: return "Invalid hostname"
-        case .noError: return "No error"
+        case .valid: return "Valid host"
         }
     }
 }

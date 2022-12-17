@@ -21,19 +21,25 @@ struct HostnameErrorView: View {
                     .captionRed()
             case .duplicate:
                 if location == .mainHostRowView {
-                    EmptyView()
+                    Text(HostValidationStatus.valid.description)
+                        .font(.caption)
+                        .opacity(0)
                 } else {
                     Text(HostValidationStatus.duplicate.description)
                         .font(.caption)
                 }
             case .emptyHostname:
-                EmptyView()
-                // Text(HostError.emptyHostname.description)
-                // .captionRed()
-            case .noError:
-                EmptyView()
+                Text(HostValidationStatus.emptyHostname.description)
+                    .font(.caption)
+                    .opacity(0)
+            case .valid:
+                Text(HostValidationStatus.valid.description)
+                    .font(.caption)
+                    .opacity(0)
             case .none:
-                EmptyView()
+                Text(HostValidationStatus.emptyHostname.description)
+                    .font(.caption)
+                    .opacity(0)
             }
         }
     }
