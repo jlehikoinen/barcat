@@ -57,7 +57,7 @@ struct FavoritesEditView: View {
                     HostnameRowErrorView(host: host)
                 }
             }
-            .width(min: 120, ideal: 120, max: 140)
+            .width(min: 160, ideal: 160, max: 180)
             
             TableColumn("Port") { $host in
                 Picker("Port", selection: $host.port) {

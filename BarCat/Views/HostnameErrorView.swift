@@ -20,8 +20,9 @@ struct HostnameErrorView: View {
                 Text(HostValidationStatus.invalidHostname.description)
                     .captionRed()
             case .duplicate:
+                // Don't show duplicates in main view
                 if location == .mainHostRowView {
-                    Text(HostValidationStatus.valid.description)
+                    Text(HostValidationStatus.duplicate.description)
                         .captionHidden()
                 } else {
                     Text(HostValidationStatus.duplicate.description)

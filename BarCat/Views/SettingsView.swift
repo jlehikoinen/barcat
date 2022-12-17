@@ -45,7 +45,7 @@ struct SettingsView: View {
         }
         .popover(isPresented: $displayingEditFavoritesPopover) {
             FavoritesEditView()
-                .frame(width: 320, height: 400)
+                .frame(width: 360, height: 400)
                 .padding()
         }
         .help("Edit favorites")
