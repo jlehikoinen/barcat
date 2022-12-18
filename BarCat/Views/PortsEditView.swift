@@ -57,9 +57,11 @@ struct PortsEditView: View {
             }
             .width(min: 80, ideal: 80, max: 100)
             
+            
             TableColumn("Description") { port in
                 Text(port.description)
                     .sfMonoFont(.tableRow)
+                    .help(port.description)
             }
             .width(min: 120, ideal: 120, max: 140)
             

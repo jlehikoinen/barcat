@@ -40,7 +40,7 @@ struct FavoritesEditView: View {
         Table($barCatStore.favoriteHosts) {
             
             TableColumn("Hostname") { $host in
-                VStack {
+                VStack(alignment: .leading) {
                     TextField(Host.namePlaceholder, text: $host.name)
                         .sfMonoFont(.tableRow)
                         .onChange(of: host) { [host] willBeHost in
@@ -53,6 +53,7 @@ struct FavoritesEditView: View {
                         ) { debouncedHost in
                             // print(debouncedHost)
                         }
+                        .help(host.name)
                         .padding(.vertical, 4)
                     HostnameRowErrorView(host: host)
                 }
