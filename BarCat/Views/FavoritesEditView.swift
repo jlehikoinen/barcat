@@ -24,6 +24,7 @@ struct FavoritesEditView: View {
                 Spacer()
                 deleteButton
             }
+            .padding(.trailing)
             
             favoriteHostsTable
             
@@ -32,7 +33,7 @@ struct FavoritesEditView: View {
             
             Text("Add a new host")
                 .font(.title2)
-                .padding()
+                .padding(.vertical)
             
             addNewHostRow
         }
@@ -68,6 +69,8 @@ struct FavoritesEditView: View {
                 VStack(alignment: .leading) {
                     TextField(Host.namePlaceholder, text: $host.name)
                         .sfMonoFont(.tableRow)
+                        // Quite ugly, but at least the "q"s and "g"s are vertically visible
+                        .textFieldStyle(.squareBorder)
                         .onChange(of: host) { [host] willBeHost in
                             newHostPublisher.send(willBeHost)
                             barCatStore.update(host, to: willBeHost)

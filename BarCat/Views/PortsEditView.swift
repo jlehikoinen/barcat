@@ -27,13 +27,14 @@ struct PortsEditView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 Text("Edit ports")
                     .font(.title2)
                 Spacer()
                 deleteButton
             }
+            .padding(.trailing)
             
             portsTable
             
@@ -42,7 +43,7 @@ struct PortsEditView: View {
             
             Text("Add a new port")
                 .font(.title2)
-                .padding()
+                .padding(.vertical)
             
             addNewPortRow
         }
