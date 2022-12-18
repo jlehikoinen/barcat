@@ -22,21 +22,7 @@ struct FavoritesEditView: View {
                 Text("Edit Favorites")
                     .font(.title2)
                 Spacer()
-                Button {
-                    displayDeleteAlert()
-                    NSLog("Selected hosts: \(selectedHostIds)")
-                } label: {
-                    Image(systemName: "trash")
-                }
-                .buttonStyle(.plain)
-                .disabled(selectedHostIds.isEmpty)
-                .help("Delete host")
-                .alert("Delete these hosts?", isPresented: $displayingDeleteAlert) {
-                    Button("Delete", role: .destructive) { delete(selectedHostIds) }
-                    Button("Cancel", role: .cancel) { }
-                } message : {
-                    Text(barCatStore.selectedHostnames(for: selectedHostIds))
-                }
+                deleteButton
             }
             
             favoriteHostsTable
@@ -52,6 +38,25 @@ struct FavoritesEditView: View {
         }
         .onAppear {
             self.displaySortedHosts()
+        }
+    }
+    
+    var deleteButton: some View {
+        
+        Button {
+            displayDeleteAlert()
+            NSLog("Selected hosts: \(selectedHostIds)")
+        } label: {
+            Image(systemName: "trash")
+        }
+        .buttonStyle(.plain)
+        .disabled(selectedHostIds.isEmpty)
+        .help("Delete host")
+        .alert("Delete these hosts?", isPresented: $displayingDeleteAlert) {
+            Button("Delete", role: .destructive) { delete(selectedHostIds) }
+            Button("Cancel", role: .cancel) { }
+        } message : {
+            Text(barCatStore.selectedHostnames(for: selectedHostIds))
         }
     }
     

@@ -13,6 +13,7 @@ struct PortsEditView: View {
     @EnvironmentObject var barCatStore: BarCatStore
     @State private var newPort = Port()
     @State private var debouncedNewPort = Port()
+    @State private var selectedPortId: Port.ID?
     @State private var displayingDeleteAlert = false
     @State private var deleteAlertType: DeleteAlertType = .deleteConfirmation
     @State private var alertTitle = ""
@@ -27,8 +28,12 @@ struct PortsEditView: View {
     
     var body: some View {
         VStack {
-            Text("Edit ports")
-                .font(.title2)
+            HStack {
+                Text("Edit ports")
+                    .font(.title2)
+                Spacer()
+                deleteButton
+            }
             
             portsTable
             
@@ -46,9 +51,39 @@ struct PortsEditView: View {
         }
     }
     
+    var deleteButton: some View {
+        
+        Button {
+            if let portId = selectedPortId {
+                displayCustomDeleteAlert(portId)
+                NSLog("Selected port: \(String(describing: selectedPortId))")
+            }
+        } label: {
+            Image(systemName: "trash")
+        }
+        .buttonStyle(.plain)
+        .disabled(selectedPortId == nil)
+        .help("Delete port")
+        .alert(alertTitle, isPresented: $displayingDeleteAlert) {
+            switch deleteAlertType {
+            case .deleteConfirmation:
+                Button("Delete", role: .destructive) {
+                    if let portId = selectedPortId {
+                        delete(portId)
+                    }
+                }
+                Button("Cancel", role: .cancel) { }
+            case .portDeleteConflict:
+                Button("OK", role: .cancel) { }
+            }
+        } message : {
+            Text(alertMsg)
+        }
+    }
+    
     var portsTable: some View {
         
-        Table(barCatStore.ports) {
+        Table(barCatStore.ports, selection: $selectedPortId) {
             
             TableColumn("Port number") { port in
                 Text(String(port.number))
@@ -63,28 +98,7 @@ struct PortsEditView: View {
                     .sfMonoFont(.tableRow)
                     .help(port.description)
             }
-            .width(min: 120, ideal: 120, max: 140)
-            
-            TableColumn("Delete") { port in
-                Button {
-                    displayCustomDeleteAlert(port)
-                } label: {
-                    Image(systemName: "trash")
-                }
-                .help("Delete port")
-                .alert(alertTitle, isPresented: $displayingDeleteAlert) {
-                    switch deleteAlertType {
-                    case .deleteConfirmation:
-                        Button("Delete", role: .destructive) { delete(port) }
-                        Button("Cancel", role: .cancel) { }
-                    case .portDeleteConflict:
-                        Button("OK", role: .cancel) { }
-                    }
-                } message : {
-                    Text(alertMsg)
-                }
-            }
-            .width(min: 60, ideal: 60, max: 80)
+            .width(min: 200, ideal: 200, max: 220)
         }
     }
     
@@ -142,26 +156,26 @@ struct PortsEditView: View {
     }
     
     private func validate(_ port: Port) {
-        
+
         newPort.validationStatus = barCatStore.validateInput(for: port)
     }
     
-    private func displayCustomDeleteAlert(_ port: Port) {
+    private func displayCustomDeleteAlert(_ portId: Port.ID) {
         
-        if barCatStore.favoriteHostsContainsPortThatWillBeDeleted(port) {
+        if barCatStore.favoriteHostsContainsPortThatWillBeDeleted(portId) {
             self.alertTitle = "This port is in use!"
-            self.alertMsg = "To successfully delete this port, delete the hosts that use this port first."
+            self.alertMsg = "If you want to delete this port, first delete the hosts that use this port."
             self.deleteAlertType = .portDeleteConflict
         } else {
-            self.alertTitle = "Confirmation"
-            self.alertMsg = "Delete (\(port.number)) port?"
+            self.alertTitle = "Delete this port?"
+            self.alertMsg = "\(barCatStore.selectedPortNumber(for: portId))"
             self.deleteAlertType = .deleteConfirmation
         }
         displayingDeleteAlert = true
     }
     
-    private func delete(_ port: Port) {
-        barCatStore.delete(port)
+    private func delete(_ port: Port.ID) {
+        barCatStore.deletePort(port)
     }
     
     private func displaySortedPorts() {

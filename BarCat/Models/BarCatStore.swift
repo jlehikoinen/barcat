@@ -52,11 +52,13 @@ class BarCatStore: ObservableObject {
         ports.sorted { $0.number < $1.number }
     }
     
-    func selectedHostnames(for hostIds: Set<Host.ID>) -> String {
+    // MARK: Id matching
+    
+    func selectedHostnames(for ids: Set<Host.ID>) -> String {
         
         var hostnames = [String]()
         
-        for id in hostIds {
+        for id in ids {
             if let index = favoriteHosts.firstIndex(where: { $0.id == id } ) {
                 hostnames.append(favoriteHosts[index].nameAndPortAsString)
             }
@@ -64,6 +66,16 @@ class BarCatStore: ObservableObject {
         
         hostnames.sort()
         return hostnames.joined(separator: ", ")
+    }
+    
+    func selectedPortNumber(for id: Port.ID) -> String {
+        
+        var portNumber = ""
+        
+        if let index = ports.firstIndex(where: { $0.id == id } ) {
+            portNumber = String(ports[index].number)
+        }
+        return portNumber
     }
     
     // MARK: View helper methods
@@ -159,10 +171,10 @@ class BarCatStore: ObservableObject {
         appPreferences.write(ports, forKey: AppPreferences.DefaultsObjectKey.Ports)
     }
     
-    func delete(_ port: Port) {
+    func deletePort(_ id: Port.ID) {
         
-        if let index = ports.firstIndex(where: { $0.id == port.id} ) {
-            NSLog("Deleting \(port)")
+        if let index = ports.firstIndex(where: { $0.id == id} ) {
+            NSLog("Deleting \(ports[index])")
             ports.remove(at: index)
             appPreferences.write(ports, forKey: AppPreferences.DefaultsObjectKey.Ports)
         }
@@ -170,8 +182,8 @@ class BarCatStore: ObservableObject {
     
     // MARK: Public helper methods
     
-    func favoriteHostsContainsPortThatWillBeDeleted(_ port: Port) -> Bool {
-        !favoriteHosts.filter { $0.port == port }.isEmpty
+    func favoriteHostsContainsPortThatWillBeDeleted(_ portId: Port.ID) -> Bool {
+        !favoriteHosts.filter { $0.port.id == portId }.isEmpty
     }
     
     // MARK: Input validation
