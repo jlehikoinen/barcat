@@ -42,7 +42,7 @@ final class BarCatTests: XCTestCase {
         
         barCatStore.add(newHost)
         barCatStore.add(anotherHost)
-        barCatStore.delete(newHost)
+        barCatStore.delete([newHost.id])
         
         XCTAssertEqual(barCatStore.favoriteHosts.count, 1)
         XCTAssertEqual(barCatStore.favoriteHosts.first, anotherHost)
@@ -109,7 +109,7 @@ final class BarCatTests: XCTestCase {
         let portToBeRemoved = Port.sample
         barCatStore.add(portToBeRemoved)
         
-        barCatStore.delete(portToBeRemoved)
+        barCatStore.deletePort(portToBeRemoved.id)
         XCTAssertEqual(barCatStore.ports.count, 0)
     }
     
@@ -122,7 +122,7 @@ final class BarCatTests: XCTestCase {
         }
         
         let portToBeRemoved = Port.default
-        barCatStore.delete(portToBeRemoved)
+        barCatStore.deletePort(portToBeRemoved.id)
         
         XCTAssertEqual(barCatStore.ports.count, 7)
     }
