@@ -11,13 +11,36 @@ import SwiftUI
 struct FavoritesEditView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
+    @State private var displayingDeleteAlert = false
+    @State private var selectedHostsIds = Set<Host.ID>()
 
     let newHostPublisher = PassthroughSubject<Host, Never>()
     
+    var selectedHostnames: String {
+        selectedHostsIds.map { barCatStore[$0].nameAndPortAsString }.joined(separator: ", ")
+    }
+    
     var body: some View {
         VStack {
-            Text("Edit Favorites")
-                .font(.title2)
+            HStack {
+                Text("Edit Favorites")
+                    .font(.title2)
+                Spacer()
+                Button {
+                    displayDeleteAlert()
+                    print("Selected hosts: \(selectedHostsIds)")
+                } label: {
+                    Image(systemName: "trash")
+                }
+                .disabled(selectedHostsIds.isEmpty)
+                .help("Delete host")
+                .alert("Delete?", isPresented: $displayingDeleteAlert) {
+                    Button("Delete", role: .destructive) { delete(selectedHostsIds) }
+                    Button("Cancel", role: .cancel) { }
+                } message : {
+                    Text(selectedHostnames)
+                }
+            }
             
             favoriteHostsTable
             
@@ -37,7 +60,7 @@ struct FavoritesEditView: View {
     
     var favoriteHostsTable: some View {
         
-        Table($barCatStore.favoriteHosts) {
+        Table($barCatStore.favoriteHosts, selection: $selectedHostsIds) {
             
             TableColumn("Hostname") { $host in
                 VStack(alignment: .leading) {
@@ -47,7 +70,7 @@ struct FavoritesEditView: View {
                             newHostPublisher.send(willBeHost)
                             barCatStore.update(host, to: willBeHost)
                         }
-                        // This is called x times there are rows in the table
+                        // How to identify row being edited for debouncedHost?
                         .onReceive(newHostPublisher
                             .debounce(for: AppConfig.hostnameInputDelayInSeconds, scheduler: DispatchQueue.main)
                         ) { debouncedHost in
@@ -58,7 +81,7 @@ struct FavoritesEditView: View {
                     HostnameRowErrorView(host: host)
                 }
             }
-            .width(min: 160, ideal: 160, max: 180)
+            .width(min: 180, ideal: 180, max: 200)
             
             TableColumn("Port") { $host in
                 Picker("Port", selection: $host.port) {
@@ -77,18 +100,7 @@ struct FavoritesEditView: View {
                     NSLog("\(host.port)")
                 }
             }
-            .width(min: 80, ideal: 80, max: 100)
-            
-            TableColumn("Delete") { $host in
-                Button {
-                    // Delete confirmation alert is difficult to implement because of Table's host (binding) identification problems
-                    delete(host)
-                } label: {
-                    Image(systemName: "trash")
-                }
-                .help("Delete host")
-            }
-            .width(min: 60, ideal: 60, max: 80)
+            .width(min: 100, ideal: 100, max: 120)
         }
     }
     
@@ -161,8 +173,12 @@ struct FavoritesEditView: View {
         barCatStore.newHost.name = ""
     }
     
-    private func delete(_ host: Host) {
-        barCatStore.delete(host)
+    private func displayDeleteAlert() {
+        displayingDeleteAlert = true
+    }
+    
+    private func delete(_ hosts: Set<Host.ID>) {
+        barCatStore.delete(hosts)
     }
     
     private func displaySortedHosts() {

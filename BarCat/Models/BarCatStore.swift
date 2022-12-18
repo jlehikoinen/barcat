@@ -52,6 +52,23 @@ class BarCatStore: ObservableObject {
         ports.sorted { $0.number < $1.number }
     }
     
+    // MARK: Subscripts
+    
+    subscript(hostId: Host.ID?) -> Host {
+        get {
+            if let id = hostId {
+                return favoriteHosts.first(where: { $0.id == id })!
+            }
+            return Host()
+        }
+
+        set(newValue) {
+            if let index = favoriteHosts.firstIndex(where: { $0.id == newValue.id }) {
+                favoriteHosts[index] = newValue
+            }
+        }
+    }
+    
     // MARK: View helper methods
     
     func updateActiveHostWithFavoritesPickerSelection(hostId: Host.ID?) {
@@ -115,13 +132,15 @@ class BarCatStore: ObservableObject {
         }
     }
     
-    func delete(_ host: Host) {
+    func delete(_ hostIds: Set<Host.ID>) {
         
-        if let index = favoriteHosts.firstIndex(where: { $0.id == host.id } ) {
-            NSLog("Deleting \(host)")
-            favoriteHosts.remove(at: index)
-            appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.FavoriteHosts)
+        for id in hostIds {
+            if let index = favoriteHosts.firstIndex(where: { $0.id == id } ) {
+                NSLog("Deleting \(favoriteHosts[index])")
+                favoriteHosts.remove(at: index)
+            }
         }
+        appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.FavoriteHosts)
     }
     
     // MARK: Ports CRUD methods
