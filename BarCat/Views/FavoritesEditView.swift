@@ -12,13 +12,9 @@ struct FavoritesEditView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
     @State private var displayingDeleteAlert = false
-    @State private var selectedHostsIds = Set<Host.ID>()
+    @State private var selectedHostIds = Set<Host.ID>()
 
     let newHostPublisher = PassthroughSubject<Host, Never>()
-    
-    var selectedHostnames: String {
-        selectedHostsIds.map { barCatStore[$0].nameAndPortAsString }.joined(separator: ", ")
-    }
     
     var body: some View {
         VStack {
@@ -28,17 +24,18 @@ struct FavoritesEditView: View {
                 Spacer()
                 Button {
                     displayDeleteAlert()
-                    print("Selected hosts: \(selectedHostsIds)")
+                    NSLog("Selected hosts: \(selectedHostIds)")
                 } label: {
                     Image(systemName: "trash")
                 }
-                .disabled(selectedHostsIds.isEmpty)
+                .buttonStyle(.plain)
+                .disabled(selectedHostIds.isEmpty)
                 .help("Delete host")
-                .alert("Delete?", isPresented: $displayingDeleteAlert) {
-                    Button("Delete", role: .destructive) { delete(selectedHostsIds) }
+                .alert("Delete these hosts?", isPresented: $displayingDeleteAlert) {
+                    Button("Delete", role: .destructive) { delete(selectedHostIds) }
                     Button("Cancel", role: .cancel) { }
                 } message : {
-                    Text(selectedHostnames)
+                    Text(barCatStore.selectedHostnames(for: selectedHostIds))
                 }
             }
             
@@ -60,7 +57,7 @@ struct FavoritesEditView: View {
     
     var favoriteHostsTable: some View {
         
-        Table($barCatStore.favoriteHosts, selection: $selectedHostsIds) {
+        Table($barCatStore.favoriteHosts, selection: $selectedHostIds) {
             
             TableColumn("Hostname") { $host in
                 VStack(alignment: .leading) {

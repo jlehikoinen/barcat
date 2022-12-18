@@ -52,21 +52,18 @@ class BarCatStore: ObservableObject {
         ports.sorted { $0.number < $1.number }
     }
     
-    // MARK: Subscripts
-    
-    subscript(hostId: Host.ID?) -> Host {
-        get {
-            if let id = hostId {
-                return favoriteHosts.first(where: { $0.id == id })!
-            }
-            return Host()
-        }
-
-        set(newValue) {
-            if let index = favoriteHosts.firstIndex(where: { $0.id == newValue.id }) {
-                favoriteHosts[index] = newValue
+    func selectedHostnames(for hostIds: Set<Host.ID>) -> String {
+        
+        var hostnames = [String]()
+        
+        for id in hostIds {
+            if let index = favoriteHosts.firstIndex(where: { $0.id == id } ) {
+                hostnames.append(favoriteHosts[index].nameAndPortAsString)
             }
         }
+        
+        hostnames.sort()
+        return hostnames.joined(separator: ", ")
     }
     
     // MARK: View helper methods
