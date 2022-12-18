@@ -11,15 +11,23 @@ import SwiftUI
 struct PortsEditView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
+    
     @State private var newPort = Port()
     @State private var debouncedNewPort = Port()
+    
+    
+    @State private var newPortNumber = ""
+    @State private var debouncedNewPortNumber = ""
+    @State private var newPortDescription = ""
+    
+    
     @State private var selectedPortId: Port.ID?
     @State private var displayingDeleteAlert = false
     @State private var deleteAlertType: DeleteAlertType = .deleteConfirmation
     @State private var alertTitle = ""
     @State private var alertMsg = ""
     
-    let newPortPublisher = PassthroughSubject<Port, Never>()
+    let newPortPublisher = PassthroughSubject<String, Never>()
     
     enum DeleteAlertType {
         case deleteConfirmation
@@ -27,6 +35,7 @@ struct PortsEditView: View {
     }
     
     var body: some View {
+        
         VStack(alignment: .leading) {
             HStack {
                 Text("Edit ports")
@@ -111,26 +120,28 @@ struct PortsEditView: View {
                     Text("Port number")
                         .font(.caption)
                         .foregroundColor(.secondary)
-                    TextField("Add port number", value: $newPort.number, formatter: NumberFormatter())
+                    TextField("Add port number", text: $newPortNumber)
                         .sfMonoFont(.textFieldInput)
-                        .onChange(of: newPort) { port in
-                            newPortPublisher.send(port)
+                        .onChange(of: newPortNumber) { number in
+                            newPortPublisher.send(number)
+                            // Workaround for port number
+                            newPort = Port(id: UUID().uuidString, number: Int(number) ?? 0, description: "")
                             self.validate(newPort)
                         }
                         .onReceive(
                             newPortPublisher
                                 .debounce(for: AppConfig.portInputDelayInSeconds,
                                           scheduler: DispatchQueue.main)
-                        ) { debouncedPort in
-                            print(debouncedPort)
-                            self.debouncedNewPort = debouncedPort
+                        ) { debouncedPortNumber in
+                            print("Debounced port number: \(debouncedPortNumber)")
+                            self.debouncedNewPortNumber = debouncedPortNumber
                         }
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Description")
                         .font(.caption)
                         .foregroundColor(.secondary)
-                    TextField("Add description", text: $newPort.description)
+                    TextField("Add description", text: $newPortDescription)
                         .sfMonoFont(.textFieldInput)
                 }
                 VStack(alignment: .leading, spacing: 2) {
@@ -151,13 +162,16 @@ struct PortsEditView: View {
     // MARK: View helper methods
     
     private func addNewPort() {
+        
+        newPort.description = newPortDescription
         barCatStore.add(newPort)
+        // TODO: Text field value is not emptied
         NSLog("Resetting add new port textfields")
-        self.newPort = Port()
+        self.newPortNumber = ""
+        self.newPortDescription = ""
     }
     
     private func validate(_ port: Port) {
-
         newPort.validationStatus = barCatStore.validateInput(for: port)
     }
     

@@ -249,10 +249,9 @@ class BarCatStore: ObservableObject {
     
     func validateInput(for newPort: Port) -> PortValidationStatus {
         
-//        NSLog("Port: \(newPort)")
-//        NSLog("Duplicate: \(defaultPortsContains(newPort))")
-//        NSLog("Valid number: \(newPort.isValidPortNumber)")
-//        NSLog("Port valid for saving: \(self.isNewPortValid)")
+        NSLog("Port: \(newPort)")
+        NSLog("Duplicate: \(portsContains(newPort))")
+        NSLog("Valid number: \(newPort.isValidPortNumber)")
         
         return portValidator(newPort)
     }

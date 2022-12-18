@@ -12,6 +12,7 @@ struct PortErrorView: View {
     let port: Port
     
     var body: some View {
+        
         HStack {
             switch port.validationStatus {
             case .duplicate:
