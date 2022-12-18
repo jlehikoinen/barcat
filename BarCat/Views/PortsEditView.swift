@@ -15,11 +15,8 @@ struct PortsEditView: View {
     @State private var newPort = Port()
     @State private var debouncedNewPort = Port()
     
-    
+    // Separate workaround variable (String) for port number (Int) handling, default value etc.
     @State private var newPortNumber = ""
-    @State private var debouncedNewPortNumber = ""
-    @State private var newPortDescription = ""
-    
     
     @State private var selectedPortId: Port.ID?
     @State private var displayingDeleteAlert = false
@@ -124,8 +121,10 @@ struct PortsEditView: View {
                         .sfMonoFont(.textFieldInput)
                         .onChange(of: newPortNumber) { number in
                             newPortPublisher.send(number)
-                            // Workaround for port number
-                            newPort = Port(id: UUID().uuidString, number: Int(number) ?? 0, description: "")
+                            // Workaround for port number handling
+                            // Validation works for Port type
+                            // TODO: 0 is assigned as a default value e.g. when text field contains letters => validator treats text as empty number
+                            newPort.number = Int(number) ?? 0
                             self.validate(newPort)
                         }
                         .onReceive(
@@ -133,15 +132,15 @@ struct PortsEditView: View {
                                 .debounce(for: AppConfig.portInputDelayInSeconds,
                                           scheduler: DispatchQueue.main)
                         ) { debouncedPortNumber in
-                            print("Debounced port number: \(debouncedPortNumber)")
-                            self.debouncedNewPortNumber = debouncedPortNumber
+                            NSLog("Debounced port number: \(debouncedPortNumber)")
+                            self.debouncedNewPort = newPort
                         }
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Description")
                         .font(.caption)
                         .foregroundColor(.secondary)
-                    TextField("Add description", text: $newPortDescription)
+                    TextField("Add description", text: $newPort.description)
                         .sfMonoFont(.textFieldInput)
                 }
                 VStack(alignment: .leading, spacing: 2) {
@@ -163,12 +162,11 @@ struct PortsEditView: View {
     
     private func addNewPort() {
         
-        newPort.description = newPortDescription
         barCatStore.add(newPort)
-        // TODO: Text field value is not emptied
+        
         NSLog("Resetting add new port textfields")
         self.newPortNumber = ""
-        self.newPortDescription = ""
+        self.newPort = Port()
     }
     
     private func validate(_ port: Port) {

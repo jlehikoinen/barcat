@@ -125,7 +125,7 @@ class BarCatStore: ObservableObject {
     func update(_ currentHost: Host, to newHost: Host) {
         
         // favoriteHosts will update anyway before this method is called
-        // this method updates only host's validationStatus and if it's ok then defaults will be called
+        // this method updates only host's validationStatus and if it's ok then defaults will be saved
         
         NSLog("Updating \(currentHost.nameAndPortAsString) -> \(newHost.nameAndPortAsString)")
         
@@ -209,18 +209,10 @@ class BarCatStore: ObservableObject {
     
     private func hostValidator(_ host: Host) -> HostValidationStatus {
         
-        // Order?
-        if favoriteHostsContains(host) {
-            return .duplicate
-        }
-        
-        if host.name.isEmpty {
-            return .emptyHostname
-        }
-        
-        if !host.isValidHostname {
-            return .invalidHostname
-        }
+        // Note order
+        if favoriteHostsContains(host) { return .duplicate }
+        if host.name.isEmpty { return .emptyHostname }
+        if !host.isValidHostname { return .invalidHostname }
         
         return .valid
     }
@@ -231,45 +223,28 @@ class BarCatStore: ObservableObject {
         NSLog("Duplicate: \(favoriteHostsContainsDuplicates)")
         NSLog("Valid hostname: \(host.isValidHostname)")
         
-        // Order?
-        if favoriteHostsContainsDuplicates {
-            return .duplicate
-        }
-        
-        if host.name.isEmpty {
-            return .emptyHostname
-        }
-        
-        if !host.isValidHostname {
-            return .invalidHostname
-        }
+        // Note order
+        if favoriteHostsContainsDuplicates { return .duplicate }
+        if host.name.isEmpty { return .emptyHostname }
+        if !host.isValidHostname { return .invalidHostname }
         
         return .valid
     }
     
-    func validateInput(for newPort: Port) -> PortValidationStatus {
+    func validateInput(for port: Port) -> PortValidationStatus {
         
-        NSLog("Port: \(newPort)")
-        NSLog("Duplicate: \(portsContains(newPort))")
-        NSLog("Valid number: \(newPort.isValidPortNumber)")
+        NSLog("Port: \(port)")
+        NSLog("Duplicate: \(portsContains(port))")
+        NSLog("Valid number: \(port.isValidPortNumber)")
         
-        return portValidator(newPort)
-    }
-    
-    private func portValidator(_ port: Port) -> PortValidationStatus {
-        
-        // Order?
-        if portsContains(port) {
-            return .duplicate
-        }
-        
-        if !port.isValidPortNumber {
-            return .invalidPortNumber
-        }
+        // Note order
+        if portsContains(port) { return .duplicate }
+        if port.number == 0 { return .emptyPortNumber }
+        if !port.isValidPortNumber { return .invalidPortNumber }
         
         return .valid
     }
-    
+
     // MARK: Duplicates
     
     // These are (temporarily) public because tests

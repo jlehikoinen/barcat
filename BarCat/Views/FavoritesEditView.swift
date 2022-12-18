@@ -69,11 +69,11 @@ struct FavoritesEditView: View {
                 VStack(alignment: .leading) {
                     TextField(Host.namePlaceholder, text: $host.name)
                         .sfMonoFont(.tableRow)
-                        // Quite ugly, but at least the "q"s and "g"s are vertically visible
+                        // Quite ugly with .squareBorder style, but at least the "q"s and "g"s are vertically visible
                         .textFieldStyle(.squareBorder)
-                        .onChange(of: host) { [host] willBeHost in
-                            newHostPublisher.send(willBeHost)
-                            barCatStore.update(host, to: willBeHost)
+                        .onChange(of: host) { [host] newHost in
+                            newHostPublisher.send(newHost)
+                            barCatStore.update(host, to: newHost)
                         }
                         // How to identify row being edited for debouncedHost?
                         .onReceive(newHostPublisher
