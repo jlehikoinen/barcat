@@ -1,6 +1,6 @@
 # BarCat
 
-BarCat is a demo SwiftUI menu bar app for testing firewall ports using netcat.
+BarCat is a SwiftUI menu bar GUI wrapper for netcat (`nc`) command line tool.
 
 ## Requirements
 
