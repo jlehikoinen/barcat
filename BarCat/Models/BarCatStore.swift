@@ -15,6 +15,7 @@ class BarCatStore: ObservableObject {
     //
     @Published var favoriteHosts = [Host]()
     @Published var ports = [Port]()
+    // @Published var ports = Ports()
     
     @Published var activeHost = Host()
     @Published var debouncedActiveHost = Host()
