@@ -16,9 +16,6 @@ class BarCatStore: ObservableObject {
     @Published var portsModel = PortsModel()
     @Published var hostsModel = HostsModel()
     
-    //
-    // @Published var favoriteHosts = [Host]()
-    
     @Published var activeHost = Host()
     @Published var debouncedActiveHost = Host()
     
@@ -49,7 +46,7 @@ class BarCatStore: ObservableObject {
     
     var favoriteHosts: [Host] {
         get { self.hostsModel.favoriteHosts }
-        set { }
+        set { self.hostsModel.favoriteHosts = newValue }
     }
     
     var sortedFavoriteHosts: [Host] {
