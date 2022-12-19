@@ -2,7 +2,7 @@
 
 BarCat is a simple SwiftUI menu bar app for testing firewall ports. BarCat uses netcat (`nc`) command line utility for fw port testing.
 
-![BarCat](screenshots/BarCat.png)
+![BarCat](Screenshots/BarCat.png)
 
 ## Requirements
 
