@@ -17,7 +17,8 @@ struct FavoritesEditView: View {
     let newHostPublisher = PassthroughSubject<Host, Never>()
     
     var body: some View {
-        VStack {
+        
+        VStack(alignment: .leading) {
             HStack {
                 Text("Edit Favorites")
                     .font(.title2)

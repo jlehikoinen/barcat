@@ -35,7 +35,7 @@ struct PortsEditView: View {
         
         VStack(alignment: .leading) {
             HStack {
-                Text("Edit ports")
+                Text("Edit Ports")
                     .font(.title2)
                 Spacer()
                 deleteButton
