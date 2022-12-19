@@ -13,9 +13,10 @@ class BarCatStore: ObservableObject {
     let appPreferences = AppPreferences()
     
     //
+    @Published var portsModel = PortsModel()
+    
+    //
     @Published var favoriteHosts = [Host]()
-    @Published var ports = [Port]()
-    // @Published var ports = Ports()
     
     @Published var activeHost = Host()
     @Published var debouncedActiveHost = Host()
@@ -31,7 +32,7 @@ class BarCatStore: ObservableObject {
     init() {
         
         readFavoriteHosts()
-        readPorts()
+        portsModel.readPorts()
         
         // Delay text input
         $activeHost
@@ -43,14 +44,20 @@ class BarCatStore: ObservableObject {
             .assign(to: &$debouncedNewHost)
     }
     
-    // MARK: Sorted objects
+    // MARK: Port convenience variables
     
-    public var sortedFavoriteHosts: [Host] {
-        favoriteHosts.sorted { $0.nameAndPortAsString < $1.nameAndPortAsString }
+    var ports: [Port] {
+        self.portsModel.ports
     }
     
-    public var sortedPorts: [Port] {
+    var sortedPorts: [Port] {
         ports.sorted { $0.number < $1.number }
+    }
+    
+    // MARK: Sorted objects
+    
+    var sortedFavoriteHosts: [Host] {
+        favoriteHosts.sorted { $0.nameAndPortAsString < $1.nameAndPortAsString }
     }
     
     // MARK: Id matching
@@ -67,16 +74,6 @@ class BarCatStore: ObservableObject {
         
         hostnames.sort()
         return hostnames.joined(separator: ", ")
-    }
-    
-    func selectedPortNumber(for id: Port.ID) -> String {
-        
-        var portNumber = ""
-        
-        if let index = ports.firstIndex(where: { $0.id == id } ) {
-            portNumber = String(ports[index].number)
-        }
-        return portNumber
     }
     
     // MARK: View helper methods
@@ -153,34 +150,6 @@ class BarCatStore: ObservableObject {
         appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.favoriteHosts)
     }
     
-    // MARK: Ports CRUD methods
-    
-    func readPorts() {
-        
-        if let ports: [Port] = appPreferences.read(forKey: AppPreferences.DefaultsObjectKey.ports) {
-            self.ports = ports
-        }
-    }
-    
-    func add(_ port: Port) {
-        
-        var newPort = port
-        if newPort.description.isEmpty { newPort.description = "(no description)" }
-        
-        NSLog("Adding \(newPort)")
-        ports.insert(newPort, at: 0)
-        appPreferences.write(ports, forKey: AppPreferences.DefaultsObjectKey.ports)
-    }
-    
-    func deletePort(_ id: Port.ID) {
-        
-        if let index = ports.firstIndex(where: { $0.id == id} ) {
-            NSLog("Deleting \(ports[index])")
-            ports.remove(at: index)
-            appPreferences.write(ports, forKey: AppPreferences.DefaultsObjectKey.ports)
-        }
-    }
-    
     // MARK: Public helper methods
     
     func favoriteHostsContainsPortThatWillBeDeleted(_ portId: Port.ID) -> Bool {
@@ -231,20 +200,6 @@ class BarCatStore: ObservableObject {
         
         return .valid
     }
-    
-    func validateInput(for port: Port) -> PortValidationStatus {
-        
-//        NSLog("Port: \(port)")
-//        NSLog("Duplicate: \(portsContains(port))")
-//        NSLog("Valid number: \(port.isValidPortNumber)")
-        
-        // Note order
-        if portsContains(port) { return .duplicate }
-        if port.number == 0 { return .emptyPortNumber }
-        if !port.isValidPortNumber { return .invalidPortNumber }
-        
-        return .valid
-    }
 
     // MARK: Duplicates
     
@@ -254,11 +209,25 @@ class BarCatStore: ObservableObject {
         self.favoriteHosts.map { $0.nameAndPortAsString }.contains(host.nameAndPortAsString)
     }
     
-    func portsContains(_ port: Port) -> Bool {
-        self.ports.map { $0.number }.contains(port.number)
-    }
-    
     var favoriteHostsContainsDuplicates: Bool {
         Set(favoriteHosts.map { $0.nameAndPortAsString }).count != favoriteHosts.map { $0.nameAndPortAsString }.count
+    }
+    
+    // MARK: Port methods
+    
+    func selectedPortNumber(for id: Port.ID) -> String {
+        portsModel.selectedPortNumber(for: id)
+    }
+    
+    func add(_ port: Port) {
+        portsModel.add(port)
+    }
+    
+    func deletePort(_ id: Port.ID) {
+        portsModel.delete(id)
+    }
+    
+    func validateInput(for port: Port) -> PortValidationStatus {
+        return portsModel.validateInput(for: port)
     }
 }

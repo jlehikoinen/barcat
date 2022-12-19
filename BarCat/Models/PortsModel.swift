@@ -14,7 +14,6 @@ struct PortsModel {
     var ports = [Port]()
     
     init() {
-        
         readPorts()
     }
     
