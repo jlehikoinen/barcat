@@ -126,12 +126,12 @@
 				6838F72928DD8412005819B7 /* MainHostInputView.swift */,
 				68917BC2293B62400019B966 /* CommandOutputView.swift */,
 				6838F72D28DDA497005819B7 /* FavoritesView.swift */,
+				68C3B1B62918F7F30045EDAD /* SettingsView.swift */,
 				68006E42291BDE820022CEAB /* FavoritesEditView.swift */,
 				68858B1D29431568001AFBAD /* HostnameErrorView.swift */,
 				681A7AA2294DF14200989048 /* HostnameRowErrorView.swift */,
 				68F4B60729279B5D000B097C /* PortsEditView.swift */,
 				681A7AA0294DEFA500989048 /* PortErrorView.swift */,
-				68C3B1B62918F7F30045EDAD /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

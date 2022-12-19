@@ -219,9 +219,9 @@ class BarCatStore: ObservableObject {
     
     func hostRowValidator(_ host: Host) -> HostValidationStatus {
         
-        NSLog("Host: \(host)")
-        NSLog("Duplicate: \(favoriteHostsContainsDuplicates)")
-        NSLog("Valid hostname: \(host.isValidHostname)")
+//        NSLog("Host: \(host)")
+//        NSLog("Duplicate: \(favoriteHostsContainsDuplicates)")
+//        NSLog("Valid hostname: \(host.isValidHostname)")
         
         // Note order
         if favoriteHostsContainsDuplicates { return .duplicate }
@@ -233,9 +233,9 @@ class BarCatStore: ObservableObject {
     
     func validateInput(for port: Port) -> PortValidationStatus {
         
-        NSLog("Port: \(port)")
-        NSLog("Duplicate: \(portsContains(port))")
-        NSLog("Valid number: \(port.isValidPortNumber)")
+//        NSLog("Port: \(port)")
+//        NSLog("Duplicate: \(portsContains(port))")
+//        NSLog("Valid number: \(port.isValidPortNumber)")
         
         // Note order
         if portsContains(port) { return .duplicate }
