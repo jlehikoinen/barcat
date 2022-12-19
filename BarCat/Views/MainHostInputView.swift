@@ -82,7 +82,7 @@ struct MainHostInputView: View {
                     await runNetcat()
                 }
             } label: {
-                Text("Run")
+                Text("Test")
             }
             .disabled(barCatStore.commandState == .loading || !barCatStore.activeHost.isValidHostname)
             .keyboardShortcut(.defaultAction)
