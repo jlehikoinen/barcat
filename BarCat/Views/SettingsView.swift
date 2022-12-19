@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @AppStorage(AppPreferences.DefaultsTopLevelKey.netcatTimeoutKey.rawValue) var netcatTimeoutInSeconds: Int = Netcat.timeoutInSecs
+    @AppStorage(AppPreferences.DefaultsTopLevelKey.netcatTimeout.rawValue) var netcatTimeoutInSeconds: Int = Netcat.timeoutInSecs
     
     @State private var displayingEditFavoritesPopover = false
     @State private var displayingEditPortsPopover = false

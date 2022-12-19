@@ -9,27 +9,27 @@ import Foundation
  
 struct AppPreferences {
     
-    //
+    // Custom compilation condition
+    // See Build Settings > Swift Compiler - Custom Flags > Active Compilation Conditions
     #if TESTING
     let defaults = UserDefaults(suiteName: #file)!
     #else
     let defaults = UserDefaults.standard
     #endif
     
-    // Object keys
     enum DefaultsObjectKey: String {
-        case FavoriteHosts
-        case Ports
+        case favoriteHosts = "FavoriteHosts"
+        case ports = "Ports"
     }
     
-    // Other keys
     enum DefaultsTopLevelKey: String {
-        case firstLaunchDoneKey = "FirstLaunchDone"
-        case netcatTimeoutKey = "NetcatTimeoutInSeconds"
+        case firstLaunchDone = "FirstLaunchDone"
+        case netcatTimeout = "NetcatTimeoutInSeconds"
     }
     
-    // For accessing Defaults values outside Views
-    var netcatTimeoutInSecs: Int { return defaults.integer(forKey: AppPreferences.DefaultsTopLevelKey.netcatTimeoutKey.rawValue) }
+    // There's also @AppStorage var in SettingsView
+    // This is for accessing defaults' value outside Views
+    var netcatTimeoutInSecs: Int { return defaults.integer(forKey: AppPreferences.DefaultsTopLevelKey.netcatTimeout.rawValue) }
     
     // MARK: Methods
     

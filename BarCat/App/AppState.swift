@@ -15,11 +15,11 @@ class AppState: ObservableObject {
         
         NSLog("Launching app.")
         
-        if !UserDefaults.standard.bool(forKey: AppPreferences.DefaultsTopLevelKey.firstLaunchDoneKey.rawValue)  {
+        if !UserDefaults.standard.bool(forKey: AppPreferences.DefaultsTopLevelKey.firstLaunchDone.rawValue)  {
             NSLog("First launch setup")
-            appPreferences.write(Port.factoryTcpPorts, forKey: AppPreferences.DefaultsObjectKey.Ports)
-            appPreferences.write(Host.exampleHosts, forKey: AppPreferences.DefaultsObjectKey.FavoriteHosts)
-            UserDefaults.standard.set(true, forKey: AppPreferences.DefaultsTopLevelKey.firstLaunchDoneKey.rawValue)
+            appPreferences.write(Port.factoryTcpPorts, forKey: AppPreferences.DefaultsObjectKey.ports)
+            appPreferences.write(Host.exampleHosts, forKey: AppPreferences.DefaultsObjectKey.favoriteHosts)
+            UserDefaults.standard.set(true, forKey: AppPreferences.DefaultsTopLevelKey.firstLaunchDone.rawValue)
         }
     }
 }

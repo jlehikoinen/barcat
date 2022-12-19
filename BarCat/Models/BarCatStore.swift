@@ -109,7 +109,7 @@ class BarCatStore: ObservableObject {
     
     func readFavoriteHosts() {
         
-        if let hosts: [Host] = appPreferences.read(forKey: AppPreferences.DefaultsObjectKey.FavoriteHosts) {
+        if let hosts: [Host] = appPreferences.read(forKey: AppPreferences.DefaultsObjectKey.favoriteHosts) {
             self.favoriteHosts = hosts
         }
     }
@@ -118,7 +118,7 @@ class BarCatStore: ObservableObject {
         
         NSLog("Adding \(host)")
         favoriteHosts.insert(host, at: 0)
-        appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.FavoriteHosts)
+        appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.favoriteHosts)
         self.activeHost.validationStatus = .emptyHostname
     }
     
@@ -136,7 +136,7 @@ class BarCatStore: ObservableObject {
             favoriteHosts[index] = host
             
             if host.validationStatus == .valid {
-                appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.FavoriteHosts)
+                appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.favoriteHosts)
             }
         }
     }
@@ -149,14 +149,14 @@ class BarCatStore: ObservableObject {
                 favoriteHosts.remove(at: index)
             }
         }
-        appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.FavoriteHosts)
+        appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.favoriteHosts)
     }
     
     // MARK: Ports CRUD methods
     
     func readPorts() {
         
-        if let ports: [Port] = appPreferences.read(forKey: AppPreferences.DefaultsObjectKey.Ports) {
+        if let ports: [Port] = appPreferences.read(forKey: AppPreferences.DefaultsObjectKey.ports) {
             self.ports = ports
         }
     }
@@ -168,7 +168,7 @@ class BarCatStore: ObservableObject {
         
         NSLog("Adding \(newPort)")
         ports.insert(newPort, at: 0)
-        appPreferences.write(ports, forKey: AppPreferences.DefaultsObjectKey.Ports)
+        appPreferences.write(ports, forKey: AppPreferences.DefaultsObjectKey.ports)
     }
     
     func deletePort(_ id: Port.ID) {
@@ -176,7 +176,7 @@ class BarCatStore: ObservableObject {
         if let index = ports.firstIndex(where: { $0.id == id} ) {
             NSLog("Deleting \(ports[index])")
             ports.remove(at: index)
-            appPreferences.write(ports, forKey: AppPreferences.DefaultsObjectKey.Ports)
+            appPreferences.write(ports, forKey: AppPreferences.DefaultsObjectKey.ports)
         }
     }
     
