@@ -35,6 +35,7 @@
 		68C3B1B52918F7B10045EDAD /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C3B1B42918F7B10045EDAD /* HeaderView.swift */; };
 		68C3B1B72918F7F30045EDAD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C3B1B62918F7F30045EDAD /* SettingsView.swift */; };
 		68C3E18E2950D613008FAE94 /* PortsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C3E18D2950D613008FAE94 /* PortsModel.swift */; };
+		68C3E1902950E8AF008FAE94 /* HostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C3E18F2950E8AF008FAE94 /* HostsModel.swift */; };
 		68EFBFBA2930F1E7003DE09D /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EFBFB92930F1E7003DE09D /* Port.swift */; };
 		68F4B60429279936000B097C /* HeaderTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F4B60329279936000B097C /* HeaderTabView.swift */; };
 		68F4B606292799CC000B097C /* MenuBarWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F4B605292799CC000B097C /* MenuBarWindowView.swift */; };
@@ -84,6 +85,7 @@
 		68C3B1B42918F7B10045EDAD /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		68C3B1B62918F7F30045EDAD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		68C3E18D2950D613008FAE94 /* PortsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortsModel.swift; sourceTree = "<group>"; };
+		68C3E18F2950E8AF008FAE94 /* HostsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsModel.swift; sourceTree = "<group>"; };
 		68EFBFB92930F1E7003DE09D /* Port.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
 		68F4B60329279936000B097C /* HeaderTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTabView.swift; sourceTree = "<group>"; };
 		68F4B605292799CC000B097C /* MenuBarWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarWindowView.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				68927C4528EEA13C00658DB1 /* BarCatStore.swift */,
+				68C3E18F2950E8AF008FAE94 /* HostsModel.swift */,
 				6838F72728DD833C005819B7 /* Host.swift */,
 				6808DE102949E4FB007A62D7 /* HostValidationStatus.swift */,
 				68C3E18D2950D613008FAE94 /* PortsModel.swift */,
@@ -331,6 +334,7 @@
 				6838F72428DD81BE005819B7 /* ProcessUtility.swift in Sources */,
 				683881B8293A25C500DB6D91 /* ActiveHostLocation.swift in Sources */,
 				68858B1E29431568001AFBAD /* HostnameErrorView.swift in Sources */,
+				68C3E1902950E8AF008FAE94 /* HostsModel.swift in Sources */,
 				680BE07E28EFF6D300144D57 /* CommandState.swift in Sources */,
 				68F4B60A2927B377000B097C /* AppPreferences.swift in Sources */,
 				68C3E18E2950D613008FAE94 /* PortsModel.swift in Sources */,

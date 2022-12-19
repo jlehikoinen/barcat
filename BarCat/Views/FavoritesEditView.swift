@@ -188,7 +188,7 @@ struct FavoritesEditView: View {
     }
     
     private func displaySortedHosts() {
-        barCatStore.favoriteHosts = barCatStore.sortedFavoriteHosts
+        barCatStore.hostsModel.favoriteHosts = barCatStore.hostsModel.sortedFavoriteHosts
     }
 }
 

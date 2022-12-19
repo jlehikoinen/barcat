@@ -14,9 +14,10 @@ class BarCatStore: ObservableObject {
     
     //
     @Published var portsModel = PortsModel()
+    @Published var hostsModel = HostsModel()
     
     //
-    @Published var favoriteHosts = [Host]()
+    // @Published var favoriteHosts = [Host]()
     
     @Published var activeHost = Host()
     @Published var debouncedActiveHost = Host()
@@ -31,7 +32,7 @@ class BarCatStore: ObservableObject {
     //
     init() {
         
-        readFavoriteHosts()
+        hostsModel.readFavoriteHosts()
         portsModel.readPorts()
         
         // Delay text input
@@ -44,6 +45,17 @@ class BarCatStore: ObservableObject {
             .assign(to: &$debouncedNewHost)
     }
     
+    // MARK: Host convenience variables
+    
+    var favoriteHosts: [Host] {
+        get { self.hostsModel.favoriteHosts }
+        set { }
+    }
+    
+    var sortedFavoriteHosts: [Host] {
+        favoriteHosts.sorted { $0.nameAndPortAsString < $1.nameAndPortAsString }
+    }
+    
     // MARK: Port convenience variables
     
     var ports: [Port] {
@@ -52,28 +64,6 @@ class BarCatStore: ObservableObject {
     
     var sortedPorts: [Port] {
         ports.sorted { $0.number < $1.number }
-    }
-    
-    // MARK: Sorted objects
-    
-    var sortedFavoriteHosts: [Host] {
-        favoriteHosts.sorted { $0.nameAndPortAsString < $1.nameAndPortAsString }
-    }
-    
-    // MARK: Id matching
-    
-    func selectedHostnames(for ids: Set<Host.ID>) -> String {
-        
-        var hostnames = [String]()
-        
-        for id in ids {
-            if let index = favoriteHosts.firstIndex(where: { $0.id == id } ) {
-                hostnames.append(favoriteHosts[index].nameAndPortAsString)
-            }
-        }
-        
-        hostnames.sort()
-        return hostnames.joined(separator: ", ")
     }
     
     // MARK: View helper methods
@@ -103,71 +93,39 @@ class BarCatStore: ObservableObject {
         }
     }
     
-    // MARK: Favorite hosts CRUD methods
+    // MARK: Favorite hosts methods
     
-    func readFavoriteHosts() {
-        
-        if let hosts: [Host] = appPreferences.read(forKey: AppPreferences.DefaultsObjectKey.favoriteHosts) {
-            self.favoriteHosts = hosts
-        }
+    func selectedHostnames(for ids: Set<Host.ID>) -> String {
+        return hostsModel.selectedHostnames(for: ids)
     }
     
     func add(_ host: Host) {
-        
-        NSLog("Adding \(host)")
-        favoriteHosts.insert(host, at: 0)
-        appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.favoriteHosts)
+        hostsModel.add(host)
         self.activeHost.validationStatus = .emptyHostname
     }
     
     func update(_ currentHost: Host, to newHost: Host) {
-        
-        // favoriteHosts will update anyway before this method is called
-        // this method updates only host's validationStatus and if it's ok then defaults will be saved
-        
-        NSLog("Updating \(currentHost.nameAndPortAsString) -> \(newHost.nameAndPortAsString)")
-        
-        if let index = favoriteHosts.firstIndex(where: { $0.id == newHost.id } ) {
-            
-            var host = newHost
-            host.validationStatus = hostRowValidator(newHost)
-            favoriteHosts[index] = host
-            
-            if host.validationStatus == .valid {
-                appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.favoriteHosts)
-            }
-        }
+        hostsModel.update(currentHost, to: newHost)
     }
     
     func delete(_ hostIds: Set<Host.ID>) {
-        
-        for id in hostIds {
-            if let index = favoriteHosts.firstIndex(where: { $0.id == id } ) {
-                NSLog("Deleting \(favoriteHosts[index])")
-                favoriteHosts.remove(at: index)
-            }
-        }
-        appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.favoriteHosts)
+        hostsModel.delete(hostIds)
     }
-    
-    // MARK: Public helper methods
     
     func favoriteHostsContainsPortThatWillBeDeleted(_ portId: Port.ID) -> Bool {
-        !favoriteHosts.filter { $0.port.id == portId }.isEmpty
+        return hostsModel.favoriteHostsContainsPortThatWillBeDeleted(portId)
     }
-    
-    // MARK: Input validation
     
     func validateInput(for host: Host, in location: ActiveHostLocation) {
         
         switch location {
         case .mainHostRowView:
-            self.activeHost.validationStatus = hostValidator(host)
+            self.activeHost.validationStatus = hostsModel.hostValidator(host)
         case .editFavoritesRowView:
             // host row validation in update method
             fallthrough
         case .editFavoritesNewHostView:
-            self.newHost.validationStatus = hostValidator(host)
+            self.newHost.validationStatus = hostsModel.hostValidator(host)
         }
         
 //        NSLog("Host: \(host)")
@@ -175,42 +133,6 @@ class BarCatStore: ObservableObject {
 //        NSLog("Valid hostname: \(host.isValidHostname)")
 //        NSLog("Active host error type: \(String(describing: self.activeHost.validationStatus))")
 //        NSLog("New host error type: \(String(describing: self.newHost.validationStatus))")
-    }
-    
-    private func hostValidator(_ host: Host) -> HostValidationStatus {
-        
-        // Note order
-        if favoriteHostsContains(host) { return .duplicate }
-        if host.name.isEmpty { return .emptyHostname }
-        if !host.isValidHostname { return .invalidHostname }
-        
-        return .valid
-    }
-    
-    func hostRowValidator(_ host: Host) -> HostValidationStatus {
-        
-//        NSLog("Host: \(host)")
-//        NSLog("Duplicate: \(favoriteHostsContainsDuplicates)")
-//        NSLog("Valid hostname: \(host.isValidHostname)")
-        
-        // Note order
-        if favoriteHostsContainsDuplicates { return .duplicate }
-        if host.name.isEmpty { return .emptyHostname }
-        if !host.isValidHostname { return .invalidHostname }
-        
-        return .valid
-    }
-
-    // MARK: Duplicates
-    
-    // These are (temporarily) public because tests
-    
-    func favoriteHostsContains(_ host: Host) -> Bool {
-        self.favoriteHosts.map { $0.nameAndPortAsString }.contains(host.nameAndPortAsString)
-    }
-    
-    var favoriteHostsContainsDuplicates: Bool {
-        Set(favoriteHosts.map { $0.nameAndPortAsString }).count != favoriteHosts.map { $0.nameAndPortAsString }.count
     }
     
     // MARK: Port methods
