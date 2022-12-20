@@ -28,10 +28,7 @@ class BarCatStore: ObservableObject {
     
     //
     init() {
-        
-        hostsModel.readFavoriteHosts()
-        portsModel.readPorts()
-        
+
         // Delay text input
         $activeHost
             .debounce(for: AppConfig.hostnameInputDelayInSeconds, scheduler: DispatchQueue.main)
@@ -67,8 +64,8 @@ class BarCatStore: ObservableObject {
     
     func updateActiveHostWithFavoritesPickerSelection(hostId: Host.ID?) {
         
-        if let id = hostId {
-            self.activeHost = favoriteHosts.first(where: { $0.id == id })!
+        if let hostId {
+            self.activeHost = favoriteHosts.first(where: { $0.id == hostId })!
             self.resetHightlightAndCommandOutputLabel()
             self.activeHost.validationStatus = .emptyHostname
         }
