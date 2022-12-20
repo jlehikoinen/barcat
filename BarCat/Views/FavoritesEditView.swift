@@ -11,6 +11,8 @@ import SwiftUI
 struct FavoritesEditView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
+    @ObservedObject var favoritesEditVM = FavoritesEditViewModel()
+    
     @State private var displayingDeleteAlert = false
     @State private var selectedHostIds = Set<Host.ID>()
 
@@ -118,10 +120,10 @@ struct FavoritesEditView: View {
                     Text("Hostname")
                         .font(.caption)
                         .foregroundColor(.secondary)
-                    TextField(Host.namePlaceholder, text: $barCatStore.newHost.name)
+                    TextField(Host.namePlaceholder, text: $favoritesEditVM.newHost.name)
                         .sfMonoFont(.textFieldInput)
-                        .onChange(of: barCatStore.newHost) { _ in
-                            barCatStore.validateInput(for: barCatStore.newHost, in: .editFavoritesNewHostView)
+                        .onChange(of: favoritesEditVM.newHost) { _ in
+                            favoritesEditVM.newHost.validationStatus = barCatStore.validateNewInput(for: favoritesEditVM.newHost)
                         }
                 }
                 
@@ -140,17 +142,17 @@ struct FavoritesEditView: View {
                     Button("Add") {
                         saveNewHost()
                     }
-                    .disabled(barCatStore.newHost.validationStatus != .valid)
+                    .disabled(favoritesEditVM.newHost.validationStatus != .valid)
                     .keyboardShortcut(.defaultAction)
                 }
             }
-            HostnameErrorView(host: barCatStore.debouncedNewHost, location: .editFavoritesNewHostView)
+            HostnameErrorView(host: favoritesEditVM.debouncedNewHost, location: .editFavoritesNewHostView)
         }
     }
     
     var portPickerNew: some View {
         
-        Picker("Port", selection: $barCatStore.newHost.port) {
+        Picker("Port", selection: $favoritesEditVM.newHost.port) {
             ForEach(barCatStore.sortedPorts, id: \.self) { port in
                 HStack {
                     Spacer()
@@ -161,9 +163,9 @@ struct FavoritesEditView: View {
             }
         }
         .labelsHidden()
-        .onChange(of: barCatStore.newHost.port) { _ in
-            NSLog("\(barCatStore.newHost.port)")
-            barCatStore.validateInput(for: barCatStore.newHost, in: .editFavoritesRowView)
+        .onChange(of: favoritesEditVM.newHost.port) { _ in
+            NSLog("\(favoritesEditVM.newHost.port)")
+            favoritesEditVM.newHost.validationStatus = barCatStore.validateNewInput(for: favoritesEditVM.newHost)
         }
     }
     
@@ -172,11 +174,11 @@ struct FavoritesEditView: View {
     private func saveNewHost() {
         
         barCatStore.add(Host(id: UUID().uuidString,
-                             name: barCatStore.newHost.name,
-                             port: barCatStore.newHost.port
+                             name: favoritesEditVM.newHost.name,
+                             port: favoritesEditVM.newHost.port
                             ))
         
-        barCatStore.newHost.name = ""
+        favoritesEditVM.newHost.name = ""
     }
     
     private func displayDeleteAlert() {

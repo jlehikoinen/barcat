@@ -37,7 +37,7 @@ struct MainHostInputView: View {
                 .disabled(barCatStore.commandState == .loading)
                 .onChange(of: barCatStore.activeHost) { host in
                     barCatStore.resetHightlightAndCommandOutputLabel()
-                    barCatStore.validateInput(for: host, in: .mainHostRowView)
+                    barCatStore.validateInput(for: host)
                 }
         }
     }

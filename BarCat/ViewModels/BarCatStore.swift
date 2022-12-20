@@ -19,24 +19,16 @@ class BarCatStore: ObservableObject {
     @Published var activeHost = Host()
     @Published var debouncedActiveHost = Host()
     
-    @Published var newHost = Host()
-    @Published var debouncedNewHost = Host()
-    
     @Published var stateHighlightColor: Color = .clear
     @Published var commandState: CommandState = .notStarted
     @Published var outputLabel: String = "..."
     
     //
     init() {
-
         // Delay text input
         $activeHost
             .debounce(for: AppConfig.hostnameInputDelayInSeconds, scheduler: DispatchQueue.main)
             .assign(to: &$debouncedActiveHost)
-    
-        $newHost
-            .debounce(for: AppConfig.hostnameInputDelayInSeconds, scheduler: DispatchQueue.main)
-            .assign(to: &$debouncedNewHost)
     }
     
     // MARK: Host convenience variables
@@ -110,23 +102,12 @@ class BarCatStore: ObservableObject {
         return hostsModel.favoriteHostsContainsPortThatWillBeDeleted(portId)
     }
     
-    func validateInput(for host: Host, in location: ActiveHostLocation) {
-        
-        switch location {
-        case .mainHostRowView:
-            self.activeHost.validationStatus = hostsModel.hostValidator(host)
-        case .editFavoritesRowView:
-            // host row validation in update method
-            fallthrough
-        case .editFavoritesNewHostView:
-            self.newHost.validationStatus = hostsModel.hostValidator(host)
-        }
-        
-//        NSLog("Host: \(host)")
-//        NSLog("Duplicate: \(favoriteHostsContains(host))")
-//        NSLog("Valid hostname: \(host.isValidHostname)")
-//        NSLog("Active host error type: \(String(describing: self.activeHost.validationStatus))")
-//        NSLog("New host error type: \(String(describing: self.newHost.validationStatus))")
+    func validateInput(for host: Host) {
+        self.activeHost.validationStatus = hostsModel.hostValidator(host)
+    }
+    
+    func validateNewInput(for host: Host) -> HostValidationStatus {
+        return hostsModel.hostValidator(host)
     }
     
     // MARK: Port methods
