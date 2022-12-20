@@ -78,8 +78,8 @@ final class BarCatTests: XCTestCase {
         let identicalHost = Host.sample
         barCatStore.add(identicalHost)
         
-        XCTAssertTrue(barCatStore.favoriteHostsContainsDuplicates)
-        XCTAssertTrue(barCatStore.favoriteHostsContains(identicalHost))
+        XCTAssertTrue(barCatStore.hostsModel.favoriteHostsContainsDuplicates)
+        XCTAssertTrue(barCatStore.hostsModel.favoriteHostsContains(identicalHost))
     }
     
     // MARK: Port tests

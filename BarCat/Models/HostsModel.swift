@@ -97,10 +97,6 @@ struct HostsModel {
     
     func hostRowValidator(_ host: Host) -> HostValidationStatus {
         
-//        NSLog("Host: \(host)")
-//        NSLog("Duplicate: \(favoriteHostsContainsDuplicates)")
-//        NSLog("Valid hostname: \(host.isValidHostname)")
-        
         // Note order
         if favoriteHostsContainsDuplicates { return .duplicate }
         if host.name.isEmpty { return .emptyHostname }

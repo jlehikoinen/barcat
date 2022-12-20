@@ -107,7 +107,7 @@ class BarCatStore: ObservableObject {
     }
     
     func validateNewInput(for host: Host) -> HostValidationStatus {
-        return hostsModel.hostValidator(host)
+        hostsModel.hostValidator(host)
     }
     
     // MARK: Port methods

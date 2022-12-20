@@ -21,7 +21,6 @@ struct PortsModel {
         ports.sorted { $0.number < $1.number }
     }
     
-    // Make static?
     func selectedPortNumber(for id: Port.ID) -> String {
         
         var portNumber = ""

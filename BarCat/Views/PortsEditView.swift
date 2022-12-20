@@ -191,7 +191,6 @@ struct PortsEditView: View {
         barCatStore.deletePort(port)
     }
     
-    // TODO: Refactor this
     private func displaySortedPorts() {
         barCatStore.portsModel.ports = barCatStore.portsModel.sortedPorts
     }
