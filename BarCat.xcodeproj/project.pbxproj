@@ -42,6 +42,7 @@
 		68F4B606292799CC000B097C /* MenuBarWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F4B605292799CC000B097C /* MenuBarWindowView.swift */; };
 		68F4B60829279B5D000B097C /* PortsEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F4B60729279B5D000B097C /* PortsEditView.swift */; };
 		68F4B60A2927B377000B097C /* AppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F4B6092927B377000B097C /* AppPreferences.swift */; };
+		68F644A92951E42700F93D95 /* PortsEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F644A82951E42700F93D95 /* PortsEditViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		68F4B605292799CC000B097C /* MenuBarWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarWindowView.swift; sourceTree = "<group>"; };
 		68F4B60729279B5D000B097C /* PortsEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortsEditView.swift; sourceTree = "<group>"; };
 		68F4B6092927B377000B097C /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
+		68F644A82951E42700F93D95 /* PortsEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortsEditViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +235,7 @@
 			children = (
 				68927C4528EEA13C00658DB1 /* BarCatStore.swift */,
 				68C3E1922951893A008FAE94 /* FavoritesEditViewModel.swift */,
+				68F644A82951E42700F93D95 /* PortsEditViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				683EBE6D28DC339500401861 /* BarCatApp.swift in Sources */,
 				681A7AA1294DEFA500989048 /* PortErrorView.swift in Sources */,
 				6838F72E28DDA497005819B7 /* FavoritesView.swift in Sources */,
+				68F644A92951E42700F93D95 /* PortsEditViewModel.swift in Sources */,
 				68C3B1B52918F7B10045EDAD /* HeaderView.swift in Sources */,
 				68C3B1B72918F7F30045EDAD /* SettingsView.swift in Sources */,
 				6892DDEB2941286F00DA3BB9 /* AppStyle.swift in Sources */,

@@ -11,9 +11,7 @@ import SwiftUI
 struct PortsEditView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
-    
-    @State private var newPort = Port()
-    @State private var debouncedNewPort = Port()
+    @ObservedObject var portsEditVM = PortsEditViewModel()
     
     // Separate workaround variable (String) for port number (Int) handling, default value etc.
     @State private var newPortNumber = ""
@@ -124,8 +122,8 @@ struct PortsEditView: View {
                             // Workaround for port number handling
                             // Validation works for Port type
                             // TODO: 0 is assigned as a default value e.g. when text field contains letters => validator treats text as empty number
-                            newPort.number = Int(number) ?? 0
-                            self.validate(newPort)
+                            portsEditVM.newPort.number = Int(number) ?? 0
+                            self.validate(portsEditVM.newPort)
                         }
                         .onReceive(
                             newPortPublisher
@@ -133,14 +131,14 @@ struct PortsEditView: View {
                                           scheduler: DispatchQueue.main)
                         ) { debouncedPortNumber in
                             NSLog("Debounced port number: \(debouncedPortNumber)")
-                            self.debouncedNewPort = newPort
+                            portsEditVM.debouncedNewPort = portsEditVM.newPort
                         }
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Description")
                         .font(.caption)
                         .foregroundColor(.secondary)
-                    TextField("Add description", text: $newPort.description)
+                    TextField("Add description", text: $portsEditVM.newPort.description)
                         .sfMonoFont(.textFieldInput)
                 }
                 VStack(alignment: .leading, spacing: 2) {
@@ -150,11 +148,11 @@ struct PortsEditView: View {
                     Button("Add") {
                         addNewPort()
                     }
-                    .disabled(newPort.validationStatus != .valid)
+                    .disabled(portsEditVM.newPort.validationStatus != .valid)
                     .keyboardShortcut(.defaultAction)
                 }
             }
-            PortErrorView(port: debouncedNewPort)
+            PortErrorView(port: portsEditVM.debouncedNewPort)
         }
     }
     
@@ -162,15 +160,15 @@ struct PortsEditView: View {
     
     private func addNewPort() {
         
-        barCatStore.add(newPort)
+        barCatStore.add(portsEditVM.newPort)
         
         NSLog("Resetting add new port textfields")
         self.newPortNumber = ""
-        self.newPort = Port()
+        portsEditVM.newPort = Port()
     }
     
     private func validate(_ port: Port) {
-        newPort.validationStatus = barCatStore.validateInput(for: port)
+        portsEditVM.newPort.validationStatus = barCatStore.validateInput(for: port)
     }
     
     private func displayCustomDeleteAlert(_ portId: Port.ID) {

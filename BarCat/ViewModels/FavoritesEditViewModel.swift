@@ -14,7 +14,6 @@ class FavoritesEditViewModel: ObservableObject {
     
     //
     init() {
-
         // Delay text input
         $newHost
             .debounce(for: AppConfig.hostnameInputDelayInSeconds, scheduler: DispatchQueue.main)
