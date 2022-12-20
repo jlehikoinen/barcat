@@ -12,7 +12,6 @@ class FavoritesEditViewModel: ObservableObject {
     @Published var newHost = Host()
     @Published var debouncedNewHost = Host()
     
-    //
     init() {
         // Delay text input
         $newHost

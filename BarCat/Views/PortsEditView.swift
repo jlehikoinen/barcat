@@ -13,16 +13,11 @@ struct PortsEditView: View {
     @EnvironmentObject var barCatStore: BarCatStore
     @ObservedObject var portsEditVM = PortsEditViewModel()
     
-    // Separate workaround variable (String) for port number (Int) handling, default value etc.
-    @State private var newPortNumber = ""
-    
     @State private var selectedPortId: Port.ID?
     @State private var displayingDeleteAlert = false
     @State private var deleteAlertType: DeleteAlertType = .deleteConfirmation
     @State private var alertTitle = ""
     @State private var alertMsg = ""
-    
-    let newPortPublisher = PassthroughSubject<String, Never>()
     
     enum DeleteAlertType {
         case deleteConfirmation
@@ -115,23 +110,14 @@ struct PortsEditView: View {
                     Text("Port number")
                         .font(.caption)
                         .foregroundColor(.secondary)
-                    TextField("Add port number", text: $newPortNumber)
+                    TextField("Add port number", text: $portsEditVM.newPortNumber)
                         .sfMonoFont(.textFieldInput)
-                        .onChange(of: newPortNumber) { number in
-                            newPortPublisher.send(number)
+                        .onChange(of: portsEditVM.newPortNumber) { number in
                             // Workaround for port number handling
-                            // Validation works for Port type
+                            // Validation works for Port type but the port number is String
                             // TODO: 0 is assigned as a default value e.g. when text field contains letters => validator treats text as empty number
                             portsEditVM.newPort.number = Int(number) ?? 0
                             self.validate(portsEditVM.newPort)
-                        }
-                        .onReceive(
-                            newPortPublisher
-                                .debounce(for: AppConfig.portInputDelayInSeconds,
-                                          scheduler: DispatchQueue.main)
-                        ) { debouncedPortNumber in
-                            NSLog("Debounced port number: \(debouncedPortNumber)")
-                            portsEditVM.debouncedNewPort = portsEditVM.newPort
                         }
                 }
                 VStack(alignment: .leading, spacing: 2) {
@@ -163,7 +149,7 @@ struct PortsEditView: View {
         barCatStore.add(portsEditVM.newPort)
         
         NSLog("Resetting add new port textfields")
-        self.newPortNumber = ""
+        portsEditVM.newPortNumber = ""
         portsEditVM.newPort = Port()
     }
     
