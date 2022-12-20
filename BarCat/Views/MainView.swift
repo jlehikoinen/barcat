@@ -11,15 +11,26 @@ struct MainView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
     
+    @State private var selectedHostId: Host.ID?
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            MainHostInputView()
+            MainHostInputView(inputHost: selectedHost)
             CommandOutputView()
             Divider()
                 .foregroundColor(.purple)
-            FavoritesView()
+            FavoritesView(selectedHost: selection)
         }
         .padding()
+    }
+    
+    private var selection: Binding<Host.ID?> {
+        Binding(get: { selectedHostId ?? "" }, set: { selectedHostId = $0 })
+    }
+    
+    private var selectedHost: Binding<Host> {
+        // TODO: Change to subscript
+        $barCatStore.activeHost
     }
 }
 

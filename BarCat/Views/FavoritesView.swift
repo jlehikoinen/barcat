@@ -10,7 +10,7 @@ import SwiftUI
 struct FavoritesView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
-    @State private var selectedHost: Host.ID?
+    @Binding var selectedHost: Host.ID?
     
     var body: some View {
         HStack {
@@ -70,6 +70,6 @@ struct FavoritesView: View {
 
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoritesView()
+        FavoritesView(selectedHost: .constant(Host.sample.id))
     }
 }
