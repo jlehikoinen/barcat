@@ -58,6 +58,7 @@ extension Host {
 extension Host {
     
     static var sample = Host(id: UUID().uuidString, name: "google.com", port: Port.sample)
+    static var empty = Host(id: UUID().uuidString, name: "", port: Port.default)
 }
 
 // MARK: Examples

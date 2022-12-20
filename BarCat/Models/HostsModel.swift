@@ -116,4 +116,21 @@ struct HostsModel {
     var favoriteHostsContainsDuplicates: Bool {
         Set(favoriteHosts.map { $0.nameAndPortAsString }).count != favoriteHosts.map { $0.nameAndPortAsString }.count
     }
+    
+    // MARK: Host subscript
+    
+    subscript(hostId: Host.ID?) -> Host {
+        get {
+            if let hostId {
+                return favoriteHosts.first(where: { $0.id == hostId }) ?? .empty
+            }
+            return .empty
+        }
+
+        set(newValue) {
+            if let hostId {
+                favoriteHosts[favoriteHosts.firstIndex(where: { $0.id == hostId })!] = newValue
+            }
+        }
+    }
 }

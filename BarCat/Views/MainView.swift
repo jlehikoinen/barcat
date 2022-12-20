@@ -29,8 +29,7 @@ struct MainView: View {
     }
     
     private var selectedHost: Binding<Host> {
-        // TODO: Change to subscript
-        $barCatStore.activeHost
+        $barCatStore.hostsModel[selection.wrappedValue]
     }
 }
 
