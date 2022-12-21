@@ -27,8 +27,8 @@ struct MainView: View {
         Binding(get: { selectedHostId }, set: { selectedHostId = $0 })
     }
     
-    private var selectedHost: Binding<Host> {
-        $barCatStore.hostsModel[selection.wrappedValue]
+    private var selectedHost: Host {
+        barCatStore.hostsModel[selection.wrappedValue]
     }
 }
 

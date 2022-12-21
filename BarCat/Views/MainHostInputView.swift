@@ -10,9 +10,19 @@ import SwiftUI
 struct MainHostInputView: View {
     
     let processUtility = ProcessUtility()
+    var inputHost: Host
     
     @EnvironmentObject var barCatStore: BarCatStore
-    @Binding var inputHost: Host
+
+    // Create a new custom binding from inputHost
+    private var activeHost: Binding<Host> {
+        Binding {
+            inputHost
+        } set: { newValue in
+            print(newValue)
+            // self.activeHost.wrappedValue = newValue  // Crashes when changing the value! Causes infinite recursion.
+        }
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -31,13 +41,18 @@ struct MainHostInputView: View {
             Text("Hostname")
                 .captionSecondary()
             
-            TextField(Host.namePlaceholder, text: $inputHost.name)
+            TextField(Host.namePlaceholder, text: activeHost.name)
                 .sfMonoFont(.textFieldInput)
                 .border(barCatStore.stateHighlightColor)
                 .disabled(barCatStore.commandState == .loading)
-                .onChange(of: inputHost) { host in
+                .onChange(of: activeHost.wrappedValue) { host in
                     barCatStore.resetHightlightAndCommandOutputLabel()
                     barCatStore.validateInput(for: host)
+
+                    // Temp testing
+                    print(inputHost)
+                    // Needed?
+                    activeHost.wrappedValue = inputHost
                 }
         }
     }
@@ -48,7 +63,7 @@ struct MainHostInputView: View {
             Text("Port")
                 .captionSecondary()
             
-            Picker("Port", selection: $inputHost.port) {
+            Picker("Port", selection: activeHost.port) {
                 ForEach(barCatStore.sortedPorts, id: \.self) { port in
                     HStack {
                         Spacer()
@@ -59,7 +74,7 @@ struct MainHostInputView: View {
                     }
                 }
             }
-            .onChange(of: inputHost.port) { selectedPort in
+            .onChange(of: activeHost.wrappedValue.port) { selectedPort in
                 NSLog("Port selected: \(selectedPort)")
                 barCatStore.resetHightlightAndCommandOutputLabel()
             }
@@ -82,7 +97,7 @@ struct MainHostInputView: View {
             } label: {
                 Text("Test")
             }
-            .disabled(barCatStore.commandState == .loading || !inputHost.isValidHostname)
+            .disabled(barCatStore.commandState == .loading || !activeHost.wrappedValue.isValidHostname)
             .keyboardShortcut(.defaultAction)
         }
     }
@@ -99,8 +114,8 @@ struct MainHostInputView: View {
                                     message: "Loading...")
         
         do {
-            (exitCode, output) = try await processUtility.runNetcat(hostname: inputHost.name,
-                                                                    portNumber: inputHost.port.number)
+            (exitCode, output) = try await processUtility.runNetcat(hostname: activeHost.wrappedValue.name,
+                                                                    portNumber: activeHost.wrappedValue.port.number)
         } catch {
             NSLog("Error: Command failed")
             exitCode = 1
@@ -120,6 +135,6 @@ struct MainHostInputView: View {
 
 struct HostRowView_Previews: PreviewProvider {
     static var previews: some View {
-        MainHostInputView(inputHost: .constant(Host.sample))
+        MainHostInputView(inputHost: Host.sample)
     }
 }
