@@ -24,7 +24,7 @@ struct MainView: View {
     }
     
     private var selection: Binding<Host.ID?> {
-        Binding(get: { selectedHostId ?? Host.empty.id }, set: { selectedHostId = $0 })
+        Binding(get: { selectedHostId }, set: { selectedHostId = $0 })
     }
     
     private var selectedHost: Binding<Host> {
