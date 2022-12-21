@@ -12,8 +12,6 @@ struct MainHostInputView: View {
     let processUtility = ProcessUtility()
     
     @EnvironmentObject var barCatStore: BarCatStore
-    
-    // Testing
     @Binding var inputHost: Host
     
     var body: some View {

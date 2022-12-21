@@ -36,7 +36,6 @@ struct FavoritesView: View {
             .labelsHidden()
             .onChange(of: selectedHost) { host in
                 NSLog("Picker selection: \(String(describing: selectedHost))")
-                barCatStore.updateActiveHostWithFavoritesPickerSelection(hostId: selectedHost)
             }
             .disabled(barCatStore.commandState == .loading)
         }
