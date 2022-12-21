@@ -10,7 +10,6 @@ import SwiftUI
 struct MainView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
-    
     @State private var selectedHostId: Host.ID?
     
     var body: some View {
@@ -25,7 +24,7 @@ struct MainView: View {
     }
     
     private var selection: Binding<Host.ID?> {
-        Binding(get: { selectedHostId ?? "" }, set: { selectedHostId = $0 })
+        Binding(get: { selectedHostId ?? Host.empty.id }, set: { selectedHostId = $0 })
     }
     
     private var selectedHost: Binding<Host> {

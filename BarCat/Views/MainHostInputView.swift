@@ -29,8 +29,7 @@ struct MainHostInputView: View {
         
         VStack(alignment: .leading, spacing: 2) {
             Text("Hostname")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .captionSecondary()
             
             TextField(Host.namePlaceholder, text: $inputHost.name)
                 .sfMonoFont(.textFieldInput)
@@ -47,8 +46,7 @@ struct MainHostInputView: View {
         
         VStack(alignment: .leading, spacing: 2) {
             Text("Port")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .captionSecondary()
             
             Picker("Port", selection: $inputHost.port) {
                 ForEach(barCatStore.sortedPorts, id: \.self) { port in
@@ -75,8 +73,7 @@ struct MainHostInputView: View {
         
         VStack(alignment: .leading, spacing: 2) {
             Text("")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .captionSecondary()
             
             Button {
                 Task {

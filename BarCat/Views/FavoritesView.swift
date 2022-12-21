@@ -23,8 +23,7 @@ struct FavoritesView: View {
         
         VStack(alignment: .leading, spacing: 2) {
             Text("Favorites")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .captionSecondary()
             Picker("Favorites", selection: $selectedHost) {
                 Text("...").tag(Host.ID?.none)
                 ForEach(barCatStore.sortedFavoriteHosts, id: \.self) { host in
@@ -45,8 +44,7 @@ struct FavoritesView: View {
         
         VStack(alignment: .leading, spacing: 2) {
             Text("")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .captionSecondary()
             Button {
                 addNewFavoriteHost()
             } label: {

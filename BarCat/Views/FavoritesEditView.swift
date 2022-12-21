@@ -118,8 +118,7 @@ struct FavoritesEditView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Hostname")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .captionSecondary()
                     TextField(Host.namePlaceholder, text: $favoritesEditVM.newHost.name)
                         .sfMonoFont(.textFieldInput)
                         .onChange(of: favoritesEditVM.newHost) { _ in
@@ -129,16 +128,14 @@ struct FavoritesEditView: View {
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Port")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .captionSecondary()
                     portPickerNew
                         .frame(width: 80, alignment: .trailing)
                 }
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .captionSecondary()
                     Button("Add") {
                         saveNewHost()
                     }

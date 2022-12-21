@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+struct CaptionSecondary: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        content
+            .font(.caption)
+            .foregroundColor(.secondary)
+    }
+}
+
 struct CaptionRed: ViewModifier {
     
     func body(content: Content) -> some View {
@@ -26,6 +35,10 @@ struct CaptionHidden: ViewModifier {
 }
 
 extension View {
+    
+    func captionSecondary() -> some View {
+        modifier(CaptionSecondary())
+    }
     
     func captionRed() -> some View {
         modifier(CaptionRed())
