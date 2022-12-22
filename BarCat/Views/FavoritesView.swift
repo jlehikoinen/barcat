@@ -10,7 +10,7 @@ import SwiftUI
 struct FavoritesView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
-    @State private var selectedHost: Host.ID?
+    @Binding var selectedHost: Host.ID?
     
     var body: some View {
         HStack {
@@ -23,8 +23,7 @@ struct FavoritesView: View {
         
         VStack(alignment: .leading, spacing: 2) {
             Text("Favorites")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .captionSecondary()
             Picker("Favorites", selection: $selectedHost) {
                 Text("...").tag(Host.ID?.none)
                 ForEach(barCatStore.sortedFavoriteHosts, id: \.self) { host in
@@ -36,7 +35,6 @@ struct FavoritesView: View {
             .labelsHidden()
             .onChange(of: selectedHost) { host in
                 NSLog("Picker selection: \(String(describing: selectedHost))")
-                barCatStore.updateActiveHostWithFavoritesPickerSelection(hostId: selectedHost)
             }
             .disabled(barCatStore.commandState == .loading)
         }
@@ -46,8 +44,7 @@ struct FavoritesView: View {
         
         VStack(alignment: .leading, spacing: 2) {
             Text("")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .captionSecondary()
             Button {
                 addNewFavoriteHost()
             } label: {
@@ -70,6 +67,6 @@ struct FavoritesView: View {
 
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoritesView()
+        FavoritesView(selectedHost: .constant(Host.sample.id))
     }
 }

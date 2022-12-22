@@ -54,15 +54,6 @@ class BarCatStore: ObservableObject {
     
     // MARK: View helper methods
     
-    func updateActiveHostWithFavoritesPickerSelection(hostId: Host.ID?) {
-        
-        if let hostId {
-            self.activeHost = favoriteHosts.first(where: { $0.id == hostId })!
-            self.resetHightlightAndCommandOutputLabel()
-            self.activeHost.validationStatus = .emptyHostname
-        }
-    }
-    
     func resetHightlightAndCommandOutputLabel() {
         
         self.updateUIBasedOn(commandState: .notStarted,

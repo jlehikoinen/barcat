@@ -108,8 +108,7 @@ struct PortsEditView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Port number")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .captionSecondary()
                     TextField("Add port number", text: $portsEditVM.newPortNumber)
                         .sfMonoFont(.textFieldInput)
                         .onChange(of: portsEditVM.newPortNumber) { number in
@@ -122,15 +121,13 @@ struct PortsEditView: View {
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Description")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .captionSecondary()
                     TextField("Add description", text: $portsEditVM.newPort.description)
                         .sfMonoFont(.textFieldInput)
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text("")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .captionSecondary()
                     Button("Add") {
                         addNewPort()
                     }

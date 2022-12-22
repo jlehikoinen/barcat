@@ -9,15 +9,15 @@ import SwiftUI
 
 struct MainView: View {
     
-    @EnvironmentObject var barCatStore: BarCatStore
-    
+    @StateObject var mainVM: MainViewModel = .init()
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            MainHostInputView()
+            MainHostInputView(mainVM: mainVM)
             CommandOutputView()
             Divider()
                 .foregroundColor(.purple)
-            FavoritesView()
+            FavoritesView(selectedHost: mainVM.selection)
         }
         .padding()
     }
