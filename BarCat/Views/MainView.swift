@@ -9,26 +9,17 @@ import SwiftUI
 
 struct MainView: View {
     
-    @EnvironmentObject var barCatStore: BarCatStore
-    @State private var selectedHostId: Host.ID?
-    
+    @StateObject var mainVM: MainViewModel = .init()
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            MainHostInputView(inputHost: selectedHost)
+            MainHostInputView(mainVM: mainVM)
             CommandOutputView()
             Divider()
                 .foregroundColor(.purple)
-            FavoritesView(selectedHost: selection)
+            FavoritesView(selectedHost: mainVM.selection)
         }
         .padding()
-    }
-    
-    private var selection: Binding<Host.ID?> {
-        Binding(get: { selectedHostId }, set: { selectedHostId = $0 })
-    }
-    
-    private var selectedHost: Host {
-        barCatStore.hostsModel[selection.wrappedValue]
     }
 }
 
