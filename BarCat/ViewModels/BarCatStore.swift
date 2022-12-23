@@ -10,15 +10,8 @@ import SwiftUI
 class BarCatStore: ObservableObject {
     
     //
-    let appPreferences = AppPreferences()
-    
-    //
     @Published var portsModel = PortsModel()
     @Published var hostsModel = HostsModel()
-    
-    @Published var stateHighlightColor: Color = .clear
-    @Published var commandState: CommandState = .notStarted
-    @Published var outputLabel: String = "..."
     
     // MARK: Host convenience variables
     
@@ -39,24 +32,6 @@ class BarCatStore: ObservableObject {
     
     var sortedPorts: [Port] {
         ports.sorted { $0.number < $1.number }
-    }
-    
-    // MARK: View helper methods
-    
-    func resetHightlightAndCommandOutputLabel() {
-        
-        self.updateUIBasedOn(commandState: .notStarted,
-                                           color: Color(NSColor.darkGray),
-                                           message: "...")
-    }
-    
-    func updateUIBasedOn(commandState: CommandState, color: Color, message: String) {
-        
-        withAnimation(.default) {
-            self.commandState = commandState
-            self.stateHighlightColor = color
-            self.outputLabel = message
-        }
     }
     
     // MARK: Favorite hosts methods

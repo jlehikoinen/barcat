@@ -34,10 +34,10 @@ struct MainHostInputView: View {
             
             TextField(Host.namePlaceholder, text: $mainVM.activeHost.name)
                 .sfMonoFont(.textFieldInput)
-                .border(barCatStore.stateHighlightColor)
-                .disabled(barCatStore.commandState == .loading)
+                .border(mainVM.stateHighlightColor)
+                .disabled(mainVM.commandState == .loading)
                 .onChange(of: mainVM.activeHost) { host in
-                    barCatStore.resetHightlightAndCommandOutputLabel()
+                    mainVM.resetHightlightAndCommandOutputLabel()
                     mainVM.activeHost.validationStatus = barCatStore.validateInput(for: host)
                 }
         }
@@ -62,11 +62,11 @@ struct MainHostInputView: View {
             }
             .onChange(of: $mainVM.activeHost.wrappedValue.port) { selectedPort in
                 NSLog("Port selected: \(selectedPort)")
-                barCatStore.resetHightlightAndCommandOutputLabel()
+                mainVM.resetHightlightAndCommandOutputLabel()
             }
             .labelsHidden()
             .frame(width: 80, alignment: .trailing)
-            .disabled(barCatStore.commandState == .loading)
+            .disabled(mainVM.commandState == .loading)
         }
     }
     
@@ -83,7 +83,7 @@ struct MainHostInputView: View {
             } label: {
                 Text("Test")
             }
-            .disabled(barCatStore.commandState == .loading || !mainVM.activeHost.isValidHostname)
+            .disabled(mainVM.commandState == .loading || !mainVM.activeHost.isValidHostname)
             .keyboardShortcut(.defaultAction)
         }
     }
@@ -95,7 +95,7 @@ struct MainHostInputView: View {
         var exitCode: OSStatus = 0
         var output = ""
         
-        barCatStore.updateUIBasedOn(commandState: .loading,
+        mainVM.updateUIBasedOn(commandState: .loading,
                                     color: .clear,
                                     message: "Loading...")
         
@@ -108,11 +108,11 @@ struct MainHostInputView: View {
         }
         
         if exitCode == 0 {
-            barCatStore.updateUIBasedOn(commandState: .finishedSuccessfully,
+            mainVM.updateUIBasedOn(commandState: .finishedSuccessfully,
                                         color: .green,
                                         message: output.isEmpty ? "Command finished successfully" : output)
         } else {
-            barCatStore.updateUIBasedOn(commandState: .finishedWithError,
+            mainVM.updateUIBasedOn(commandState: .finishedWithError,
                                         color: .red,
                                         message: output.isEmpty ? "Command failed" : output)
         }

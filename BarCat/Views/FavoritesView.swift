@@ -38,7 +38,7 @@ struct FavoritesView: View {
                 NSLog("Picker selection: \(String(describing: selectedHostId))")
                 mainVM.activeHost = barCatStore.hostsModel[selectedHostId]
             }
-            .disabled(barCatStore.commandState == .loading)
+            .disabled(mainVM.commandState == .loading)
         }
     }
     
