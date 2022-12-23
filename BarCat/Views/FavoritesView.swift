@@ -64,6 +64,8 @@ struct FavoritesView: View {
         barCatStore.add(Host(id: UUID().uuidString,
                              name: mainVM.activeHost.name,
                              port: mainVM.activeHost.port))
+        
+        mainVM.activeHost.validationStatus = .emptyHostname
     }
 }
 

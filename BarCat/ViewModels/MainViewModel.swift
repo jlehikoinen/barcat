@@ -12,4 +12,10 @@ class MainViewModel: ObservableObject {
     @Published var activeHost = Host()
     @Published var debouncedActiveHost = Host()
     
+    init() {
+        // Delay text input
+        $activeHost
+            .debounce(for: AppConfig.hostnameInputDelayInSeconds, scheduler: DispatchQueue.main)
+            .assign(to: &$debouncedActiveHost)
+    }
 }

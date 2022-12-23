@@ -22,7 +22,7 @@ struct MainHostInputView: View {
                 portPicker
                 runButton
             }
-            HostnameErrorView(host: barCatStore.debouncedActiveHost, location: .mainHostRowView)
+            HostnameErrorView(host: mainVM.debouncedActiveHost, location: .mainHostRowView)
         }
     }
     
@@ -38,7 +38,7 @@ struct MainHostInputView: View {
                 .disabled(barCatStore.commandState == .loading)
                 .onChange(of: mainVM.activeHost) { host in
                     barCatStore.resetHightlightAndCommandOutputLabel()
-                    barCatStore.validateInput(for: host)
+                    mainVM.activeHost.validationStatus = barCatStore.validateInput(for: host)
                 }
         }
     }

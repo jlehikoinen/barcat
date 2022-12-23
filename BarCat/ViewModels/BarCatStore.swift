@@ -16,20 +16,9 @@ class BarCatStore: ObservableObject {
     @Published var portsModel = PortsModel()
     @Published var hostsModel = HostsModel()
     
-    @Published var activeHost = Host()
-    @Published var debouncedActiveHost = Host()
-    
     @Published var stateHighlightColor: Color = .clear
     @Published var commandState: CommandState = .notStarted
     @Published var outputLabel: String = "..."
-    
-    //
-    init() {
-        // Delay text input
-        $activeHost
-            .debounce(for: AppConfig.hostnameInputDelayInSeconds, scheduler: DispatchQueue.main)
-            .assign(to: &$debouncedActiveHost)
-    }
     
     // MARK: Host convenience variables
     
@@ -78,7 +67,6 @@ class BarCatStore: ObservableObject {
     
     func add(_ host: Host) {
         hostsModel.add(host)
-        self.activeHost.validationStatus = .emptyHostname
     }
     
     func update(_ currentHost: Host, to newHost: Host) {
@@ -93,11 +81,7 @@ class BarCatStore: ObservableObject {
         return hostsModel.favoriteHostsContainsPortThatWillBeDeleted(portId)
     }
     
-    func validateInput(for host: Host) {
-        self.activeHost.validationStatus = hostsModel.hostValidator(host)
-    }
-    
-    func validateNewInput(for host: Host) -> HostValidationStatus {
+    func validateInput(for host: Host) -> HostValidationStatus {
         hostsModel.hostValidator(host)
     }
     
