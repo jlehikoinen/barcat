@@ -34,10 +34,10 @@ struct MainHostInputView: View {
             
             TextField(Host.namePlaceholder, text: $mainVM.activeHost.name)
                 .sfMonoFont(.textFieldInput)
-                .border(mainVM.stateHighlightColor)
+                .border(mainVM.commandState.highlightColor)
                 .disabled(mainVM.commandState == .loading)
                 .onChange(of: mainVM.activeHost) { host in
-                    mainVM.resetHightlightAndCommandOutputLabel()
+                    mainVM.resetCommandOutputLabel()
                     mainVM.activeHost.validationStatus = barCatStore.validateInput(for: host)
                 }
         }
@@ -62,7 +62,8 @@ struct MainHostInputView: View {
             }
             .onChange(of: $mainVM.activeHost.wrappedValue.port) { selectedPort in
                 NSLog("Port selected: \(selectedPort)")
-                mainVM.resetHightlightAndCommandOutputLabel()
+                mainVM.resetCommandOutputLabel()
+                mainVM.commandState = .notStarted
             }
             .labelsHidden()
             .frame(width: 80, alignment: .trailing)
@@ -95,9 +96,10 @@ struct MainHostInputView: View {
         var exitCode: OSStatus = 0
         var output = ""
         
-        mainVM.updateUIBasedOn(commandState: .loading,
-                                    color: .clear,
-                                    message: "Loading...")
+        withAnimation(.default) {
+            mainVM.commandState = .loading
+            mainVM.outputLabel = "Loading..."
+        }
         
         do {
             (exitCode, output) = try await processUtility.runNetcat(hostname: mainVM.activeHost.name,
@@ -107,14 +109,13 @@ struct MainHostInputView: View {
             exitCode = 1
         }
         
-        if exitCode == 0 {
-            mainVM.updateUIBasedOn(commandState: .finishedSuccessfully,
-                                        color: .green,
-                                        message: output.isEmpty ? "Command finished successfully" : output)
-        } else {
-            mainVM.updateUIBasedOn(commandState: .finishedWithError,
-                                        color: .red,
-                                        message: output.isEmpty ? "Command failed" : output)
+        withAnimation(.default) {
+            if exitCode == 0 {
+                mainVM.commandState = .finishedSuccessfully
+            } else {
+                mainVM.commandState = .finishedWithError
+            }
+            mainVM.outputLabel = output
         }
     }
 }

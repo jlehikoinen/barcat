@@ -5,7 +5,7 @@
 //  Created by Janne Lehikoinen on 7.10.2022.
 //
 
-import Foundation
+import SwiftUI
 
 enum CommandState {
     
@@ -13,4 +13,17 @@ enum CommandState {
     case loading
     case finishedSuccessfully
     case finishedWithError
+    
+    var highlightColor: Color {
+        switch self {
+        case .notStarted:
+            return Color(NSColor.darkGray)
+        case .loading:
+            return .clear
+        case .finishedSuccessfully:
+            return .green
+        case .finishedWithError:
+            return .red
+        }
+    }
 }

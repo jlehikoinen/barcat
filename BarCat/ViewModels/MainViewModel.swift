@@ -25,19 +25,10 @@ class MainViewModel: ObservableObject {
     
     // MARK: View helper methods
     
-    func resetHightlightAndCommandOutputLabel() {
-        
-        self.updateUIBasedOn(commandState: .notStarted,
-                                           color: Color(NSColor.darkGray),
-                                           message: "...")
-    }
-    
-    func updateUIBasedOn(commandState: CommandState, color: Color, message: String) {
-        
+    func resetCommandOutputLabel() {
         withAnimation(.default) {
-            self.commandState = commandState
-            self.stateHighlightColor = color
-            self.outputLabel = message
+            self.commandState = .notStarted
+            self.outputLabel = "..."
         }
     }
 }
