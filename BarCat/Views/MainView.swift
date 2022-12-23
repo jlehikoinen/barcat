@@ -17,7 +17,7 @@ struct MainView: View {
             CommandOutputView()
             Divider()
                 .foregroundColor(.purple)
-            FavoritesView(selectedHost: mainVM.selection)
+            FavoritesView(mainVM: mainVM)
         }
         .padding()
     }

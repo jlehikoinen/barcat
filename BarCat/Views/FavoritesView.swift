@@ -10,7 +10,8 @@ import SwiftUI
 struct FavoritesView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
-    @Binding var selectedHost: Host.ID?
+    @ObservedObject var mainVM: MainViewModel
+    @State var selectedHostId: Host.ID?
     
     var body: some View {
         HStack {
@@ -24,7 +25,7 @@ struct FavoritesView: View {
         VStack(alignment: .leading, spacing: 2) {
             Text("Favorites")
                 .captionSecondary()
-            Picker("Favorites", selection: $selectedHost) {
+            Picker("Favorites", selection: $selectedHostId) {
                 Text("...").tag(Host.ID?.none)
                 ForEach(barCatStore.sortedFavoriteHosts, id: \.self) { host in
                     Text(host.nameAndPortAsString)
@@ -33,8 +34,9 @@ struct FavoritesView: View {
                 }
             }
             .labelsHidden()
-            .onChange(of: selectedHost) { host in
-                NSLog("Picker selection: \(String(describing: selectedHost))")
+            .onChange(of: selectedHostId) { host in
+                NSLog("Picker selection: \(String(describing: selectedHostId))")
+                mainVM.activeHost = barCatStore.hostsModel[selectedHostId]
             }
             .disabled(barCatStore.commandState == .loading)
         }
@@ -51,7 +53,7 @@ struct FavoritesView: View {
                 Image(systemName: "plus")
             }
             .help("Add current host to favorites")
-            .disabled(!barCatStore.activeHost.isValidHostname)
+            .disabled(!mainVM.activeHost.isValidHostname)
         }
     }
     
@@ -60,13 +62,13 @@ struct FavoritesView: View {
     private func addNewFavoriteHost() {
         
         barCatStore.add(Host(id: UUID().uuidString,
-                             name: barCatStore.activeHost.name,
-                             port: barCatStore.activeHost.port))
+                             name: mainVM.activeHost.name,
+                             port: mainVM.activeHost.port))
     }
 }
 
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoritesView(selectedHost: .constant(Host.sample.id))
+        FavoritesView(mainVM: MainViewModel())
     }
 }

@@ -9,9 +9,7 @@ import SwiftUI
 
 class MainViewModel: ObservableObject {
     
-    @Published var selectedHostId: Host.ID?
+    @Published var activeHost = Host()
+    @Published var debouncedActiveHost = Host()
     
-    var selection: Binding<Host.ID?> {
-        Binding(get: { self.selectedHostId }, set: { self.selectedHostId = $0 })
-    }
 }
