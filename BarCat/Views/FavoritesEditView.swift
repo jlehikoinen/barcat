@@ -122,7 +122,7 @@ struct FavoritesEditView: View {
                     TextField(Host.namePlaceholder, text: $favoritesEditVM.newHost.name)
                         .sfMonoFont(.textFieldInput)
                         .onChange(of: favoritesEditVM.newHost) { _ in
-                            favoritesEditVM.newHost.validationStatus = barCatStore.validateNewInput(for: favoritesEditVM.newHost)
+                            favoritesEditVM.newHost.validationStatus = barCatStore.validateInput(for: favoritesEditVM.newHost)
                         }
                 }
                 
@@ -162,7 +162,7 @@ struct FavoritesEditView: View {
         .labelsHidden()
         .onChange(of: favoritesEditVM.newHost.port) { _ in
             NSLog("\(favoritesEditVM.newHost.port)")
-            favoritesEditVM.newHost.validationStatus = barCatStore.validateNewInput(for: favoritesEditVM.newHost)
+            favoritesEditVM.newHost.validationStatus = barCatStore.validateInput(for: favoritesEditVM.newHost)
         }
     }
     

@@ -14,10 +14,10 @@ struct MainView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             MainHostInputView(mainVM: mainVM)
-            CommandOutputView()
+            CommandOutputView(mainVM: mainVM)
             Divider()
                 .foregroundColor(.purple)
-            FavoritesView(selectedHost: mainVM.selection)
+            FavoritesView(mainVM: mainVM)
         }
         .padding()
     }

@@ -13,7 +13,6 @@ struct MainHostInputView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
     @ObservedObject var mainVM: MainViewModel
-    @State var activeHost = Host()
     
     var body: some View {
         
@@ -23,10 +22,7 @@ struct MainHostInputView: View {
                 portPicker
                 runButton
             }
-            HostnameErrorView(host: barCatStore.debouncedActiveHost, location: .mainHostRowView)
-        }
-        .onReceive(mainVM.$selectedHostId) { hostId in
-            activeHost = barCatStore.hostsModel[hostId]
+            HostnameErrorView(host: mainVM.debouncedActiveHost, location: .mainHostRowView)
         }
     }
     
@@ -36,13 +32,13 @@ struct MainHostInputView: View {
             Text("Hostname")
                 .captionSecondary()
             
-            TextField(Host.namePlaceholder, text: $activeHost.name)
+            TextField(Host.namePlaceholder, text: $mainVM.activeHost.name)
                 .sfMonoFont(.textFieldInput)
-                .border(barCatStore.stateHighlightColor)
-                .disabled(barCatStore.commandState == .loading)
-                .onChange(of: activeHost) { host in
-                    barCatStore.resetHightlightAndCommandOutputLabel()
-                    barCatStore.validateInput(for: host)
+                .border(mainVM.commandState.highlightColor)
+                .disabled(mainVM.commandState == .loading)
+                .onChange(of: mainVM.activeHost) { host in
+                    mainVM.resetCommandOutputLabel()
+                    mainVM.activeHost.validationStatus = barCatStore.validateInput(for: host)
                 }
         }
     }
@@ -53,7 +49,7 @@ struct MainHostInputView: View {
             Text("Port")
                 .captionSecondary()
             
-            Picker("Port", selection: $activeHost.port) {
+            Picker("Port", selection: $mainVM.activeHost.port) {
                 ForEach(barCatStore.sortedPorts, id: \.self) { port in
                     HStack {
                         Spacer()
@@ -64,13 +60,14 @@ struct MainHostInputView: View {
                     }
                 }
             }
-            .onChange(of: $activeHost.wrappedValue.port) { selectedPort in
+            .onChange(of: $mainVM.activeHost.wrappedValue.port) { selectedPort in
                 NSLog("Port selected: \(selectedPort)")
-                barCatStore.resetHightlightAndCommandOutputLabel()
+                mainVM.resetCommandOutputLabel()
+                mainVM.commandState = .notStarted
             }
             .labelsHidden()
             .frame(width: 80, alignment: .trailing)
-            .disabled(barCatStore.commandState == .loading)
+            .disabled(mainVM.commandState == .loading)
         }
     }
     
@@ -87,7 +84,7 @@ struct MainHostInputView: View {
             } label: {
                 Text("Test")
             }
-            .disabled(barCatStore.commandState == .loading || !activeHost.isValidHostname)
+            .disabled(mainVM.commandState == .loading || !mainVM.activeHost.isValidHostname)
             .keyboardShortcut(.defaultAction)
         }
     }
@@ -99,26 +96,26 @@ struct MainHostInputView: View {
         var exitCode: OSStatus = 0
         var output = ""
         
-        barCatStore.updateUIBasedOn(commandState: .loading,
-                                    color: .clear,
-                                    message: "Loading...")
+        withAnimation(.default) {
+            mainVM.commandState = .loading
+            mainVM.outputLabel = "Loading..."
+        }
         
         do {
-            (exitCode, output) = try await processUtility.runNetcat(hostname: activeHost.name,
-                                                                    portNumber: activeHost.port.number)
+            (exitCode, output) = try await processUtility.runNetcat(hostname: mainVM.activeHost.name,
+                                                                    portNumber: mainVM.activeHost.port.number)
         } catch {
             NSLog("Error: Command failed")
             exitCode = 1
         }
         
-        if exitCode == 0 {
-            barCatStore.updateUIBasedOn(commandState: .finishedSuccessfully,
-                                        color: .green,
-                                        message: output.isEmpty ? "Command finished successfully" : output)
-        } else {
-            barCatStore.updateUIBasedOn(commandState: .finishedWithError,
-                                        color: .red,
-                                        message: output.isEmpty ? "Command failed" : output)
+        withAnimation(.default) {
+            if exitCode == 0 {
+                mainVM.commandState = .finishedSuccessfully
+            } else {
+                mainVM.commandState = .finishedWithError
+            }
+            mainVM.outputLabel = output
         }
     }
 }

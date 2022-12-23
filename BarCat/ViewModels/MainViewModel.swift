@@ -9,9 +9,26 @@ import SwiftUI
 
 class MainViewModel: ObservableObject {
     
-    @Published var selectedHostId: Host.ID?
+    @Published var activeHost = Host()
+    @Published var debouncedActiveHost = Host()
     
-    var selection: Binding<Host.ID?> {
-        Binding(get: { self.selectedHostId }, set: { self.selectedHostId = $0 })
+    @Published var stateHighlightColor: Color = .clear
+    @Published var commandState: CommandState = .notStarted
+    @Published var outputLabel: String = "..."
+    
+    init() {
+        // Delay text input
+        $activeHost
+            .debounce(for: AppConfig.hostnameInputDelayInSeconds, scheduler: DispatchQueue.main)
+            .assign(to: &$debouncedActiveHost)
+    }
+    
+    // MARK: View helper methods
+    
+    func resetCommandOutputLabel() {
+        withAnimation(.default) {
+            self.commandState = .notStarted
+            self.outputLabel = "..."
+        }
     }
 }
