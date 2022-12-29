@@ -61,7 +61,6 @@ struct PortsEditView: View {
         } label: {
             Image(systemName: "trash")
         }
-        .buttonStyle(.plain)
         .disabled(selectedPortId == nil)
         .help("Delete port")
         .alert(alertTitle, isPresented: $displayingDeleteAlert) {

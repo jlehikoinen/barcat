@@ -53,7 +53,6 @@ struct FavoritesEditView: View {
         } label: {
             Image(systemName: "trash")
         }
-        .buttonStyle(.plain)
         .disabled(selectedHostIds.isEmpty)
         .help("Delete host")
         .alert("Delete these hosts?", isPresented: $displayingDeleteAlert) {

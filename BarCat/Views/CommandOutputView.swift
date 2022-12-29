@@ -9,11 +9,10 @@ import SwiftUI
 
 struct CommandOutputView: View {
     
-    @EnvironmentObject var barCatStore: BarCatStore
-    @ObservedObject var mainVM: MainViewModel
+    var outputText: String
     
     var body: some View {
-        Text(mainVM.outputLabel)
+        Text(outputText)
             .font(.footnote )
             .fixedSize(horizontal: false, vertical: true)
             .textSelection(.enabled)
@@ -22,6 +21,6 @@ struct CommandOutputView: View {
 
 struct CommandOutputView_Previews: PreviewProvider {
     static var previews: some View {
-        CommandOutputView(mainVM: MainViewModel())
+        CommandOutputView(outputText: "Sample output")
     }
 }
