@@ -25,11 +25,16 @@ struct Host {
         self.name = name
         self.port = port
     }
+    
+    static func < (lhs: Host, rhs: Host) -> Bool {
+        lhs.nameAndPortAsString < rhs.nameAndPortAsString
+    }
 }
 
 extension Host: Identifiable {}
 extension Host: Hashable {}
 extension Host: Codable {}
+extension Host: Comparable {}
 
 // MARK: Computed vars
 
