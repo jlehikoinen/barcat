@@ -25,11 +25,16 @@ struct Port {
         self.number = number
         self.description = description
     }
+    
+    static func < (lhs: Port, rhs: Port) -> Bool {
+        lhs.number < rhs.number
+    }
 }
 
 extension Port: Identifiable {}
 extension Port: Hashable {}
 extension Port: Codable {}
+extension Port: Comparable {}
 
 // MARK: Computed vars
 

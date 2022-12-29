@@ -17,19 +17,11 @@ struct PortsModel {
         readPorts()
     }
     
-    public var sortedPorts: [Port] {
+    var sortedPorts: [Port] {
         ports.sorted { $0.number < $1.number }
     }
     
-    func selectedPortNumber(for id: Port.ID) -> String {
-        
-        var portNumber = ""
-        
-        if let index = ports.firstIndex(where: { $0.id == id } ) {
-            portNumber = String(ports[index].number)
-        }
-        return portNumber
-    }
+    // MARK: CRUD methods
     
     mutating func readPorts() {
         
@@ -55,6 +47,16 @@ struct PortsModel {
             ports.remove(at: index)
             appPreferences.write(ports, forKey: AppPreferences.DefaultsObjectKey.ports)
         }
+    }
+    
+    func selectedPortNumber(for id: Port.ID) -> String {
+        
+        var portNumber = ""
+        
+        if let index = ports.firstIndex(where: { $0.id == id } ) {
+            portNumber = String(ports[index].number)
+        }
+        return portNumber
     }
     
     func validateInput(for port: Port) -> PortValidationStatus {

@@ -171,8 +171,9 @@ struct PortsEditView: View {
         barCatStore.deletePort(port)
     }
     
+    /// Use this ad-hoc sorting method when view loads, so when adding a new port the port appears on top of the list
     private func displaySortedPorts() {
-        barCatStore.portsModel.ports = barCatStore.portsModel.sortedPorts
+        barCatStore.portsModel.ports.sort()
     }
 }
 
