@@ -53,7 +53,6 @@ struct FavoritesEditView: View {
         } label: {
             Image(systemName: "trash")
         }
-        .buttonStyle(.plain)
         .disabled(selectedHostIds.isEmpty)
         .help("Delete host")
         .alert("Delete these hosts?", isPresented: $displayingDeleteAlert) {
@@ -186,8 +185,10 @@ struct FavoritesEditView: View {
         barCatStore.delete(hosts)
     }
     
+    /// Use this ad-hoc sorting method when view loads
+    /// List of hosts is not sorted by default so when adding a new host the host appears on top of the list
     private func displaySortedHosts() {
-        barCatStore.hostsModel.favoriteHosts = barCatStore.hostsModel.sortedFavoriteHosts
+        barCatStore.favoriteHosts.sort()
     }
 }
 

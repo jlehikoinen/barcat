@@ -17,9 +17,13 @@ struct HostsModel {
         readFavoriteHosts()
     }
     
+    // MARK: Computed properties
+    
     var sortedFavoriteHosts: [Host] {
         favoriteHosts.sorted { $0.nameAndPortAsString < $1.nameAndPortAsString }
     }
+    
+    // MARK: Helper methods
     
     func selectedHostnames(for ids: Set<Host.ID>) -> String {
         
@@ -34,6 +38,12 @@ struct HostsModel {
         hostnames.sort()
         return hostnames.joined(separator: ", ")
     }
+    
+    func favoriteHostsContainsPortThatWillBeDeleted(_ portId: Port.ID) -> Bool {
+        !favoriteHosts.filter { $0.port.id == portId }.isEmpty
+    }
+    
+    // MARK: CRUD methods
     
     mutating func readFavoriteHosts() {
         
@@ -77,10 +87,6 @@ struct HostsModel {
             }
         }
         appPreferences.write(favoriteHosts, forKey: AppPreferences.DefaultsObjectKey.favoriteHosts)
-    }
-    
-    func favoriteHostsContainsPortThatWillBeDeleted(_ portId: Port.ID) -> Bool {
-        !favoriteHosts.filter { $0.port.id == portId }.isEmpty
     }
     
     // MARK: Input validation

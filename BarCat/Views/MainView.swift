@@ -9,12 +9,12 @@ import SwiftUI
 
 struct MainView: View {
     
-    @StateObject var mainVM: MainViewModel = .init()
+    @ObservedObject var mainVM: MainViewModel = .init()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             MainHostInputView(mainVM: mainVM)
-            CommandOutputView(mainVM: mainVM)
+            CommandOutputView(outputText: mainVM.outputLabel)
             Divider()
                 .foregroundColor(.purple)
             FavoritesView(mainVM: mainVM)

@@ -21,7 +21,7 @@ class BarCatStore: ObservableObject {
     }
     
     var sortedFavoriteHosts: [Host] {
-        favoriteHosts.sorted { $0.nameAndPortAsString < $1.nameAndPortAsString }
+        self.hostsModel.sortedFavoriteHosts
     }
     
     // MARK: Port convenience variables
@@ -31,7 +31,7 @@ class BarCatStore: ObservableObject {
     }
     
     var sortedPorts: [Port] {
-        ports.sorted { $0.number < $1.number }
+        self.portsModel.sortedPorts
     }
     
     // MARK: Favorite hosts methods

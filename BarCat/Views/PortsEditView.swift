@@ -61,7 +61,6 @@ struct PortsEditView: View {
         } label: {
             Image(systemName: "trash")
         }
-        .buttonStyle(.plain)
         .disabled(selectedPortId == nil)
         .help("Delete port")
         .alert(alertTitle, isPresented: $displayingDeleteAlert) {
@@ -172,8 +171,10 @@ struct PortsEditView: View {
         barCatStore.deletePort(port)
     }
     
+    /// Use this ad-hoc sorting method when view loads
+    /// List of ports is not sorted by default so when adding a new port the port appears on top of the list
     private func displaySortedPorts() {
-        barCatStore.portsModel.ports = barCatStore.portsModel.sortedPorts
+        barCatStore.portsModel.ports.sort()
     }
 }
 
