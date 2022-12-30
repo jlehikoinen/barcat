@@ -67,10 +67,6 @@ struct PortsModel {
     
     func validateInput(for port: Port) -> PortValidationStatus {
         
-//        NSLog("Port: \(port)")
-//        NSLog("Duplicate: \(portsContains(port))")
-//        NSLog("Valid number: \(port.isValidPortNumber)")
-        
         // Note order
         if portsContains(port) { return .duplicate }
         if port.number == 0 { return .emptyPortNumber }
