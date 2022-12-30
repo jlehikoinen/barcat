@@ -17,6 +17,8 @@ struct PortsModel {
         readPorts()
     }
     
+    // MARK: Computed properties
+    
     var sortedPorts: [Port] {
         ports.sorted { $0.number < $1.number }
     }
@@ -49,6 +51,8 @@ struct PortsModel {
         }
     }
     
+    // MARK: Helper methods
+    
     func selectedPortNumber(for id: Port.ID) -> String {
         
         var portNumber = ""
@@ -58,6 +62,8 @@ struct PortsModel {
         }
         return portNumber
     }
+    
+    // MARK: Input validation
     
     func validateInput(for port: Port) -> PortValidationStatus {
         
