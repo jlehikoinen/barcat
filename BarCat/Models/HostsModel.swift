@@ -94,7 +94,7 @@ struct HostsModel {
     func hostValidator(_ host: Host) -> HostValidationStatus {
         
         // Note order
-        if favoriteHostsContains(host) { return .duplicate }
+        if favoriteHostsContainsDuplicate(host) { return .duplicate }
         if host.name.isEmpty { return .emptyHostname }
         if !host.isValidHostname { return .invalidHostname }
         
@@ -104,7 +104,7 @@ struct HostsModel {
     func hostRowValidator(_ host: Host) -> HostValidationStatus {
         
         // Note order
-        if favoriteHostsContainsDuplicates { return .duplicate }
+        if favoriteHostsContainsDuplicate(host) { return .duplicate }
         if host.name.isEmpty { return .emptyHostname }
         if !host.isValidHostname { return .invalidHostname }
         
@@ -115,12 +115,8 @@ struct HostsModel {
     
     // These are (temporarily) public because tests
     
-    func favoriteHostsContains(_ host: Host) -> Bool {
-        self.favoriteHosts.map { $0.nameAndPortAsString }.contains(host.nameAndPortAsString)
-    }
-    
-    var favoriteHostsContainsDuplicates: Bool {
-        Set(favoriteHosts.map { $0.nameAndPortAsString }).count != favoriteHosts.map { $0.nameAndPortAsString }.count
+    func favoriteHostsContainsDuplicate(_ host: Host) -> Bool {
+        favoriteHosts.filter{ $0.nameAndPortAsString == host.nameAndPortAsString }.count > 1
     }
     
     // MARK: Host subscript
