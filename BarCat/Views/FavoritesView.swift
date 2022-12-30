@@ -11,7 +11,8 @@ struct FavoritesView: View {
     
     @EnvironmentObject var barCatStore: BarCatStore
     @ObservedObject var mainVM: MainViewModel
-    @State var selectedHostId: Host.ID?
+    @State private var selectedHostId: Host.ID?
+    @State private var isPickerBorderVisible = false
     
     var body: some View {
         HStack {
@@ -33,6 +34,11 @@ struct FavoritesView: View {
                         .tag(Host.ID?.some(host.id))
                 }
             }
+            .overlay(
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(.green, lineWidth: isPickerBorderVisible ? 2 : 1)
+                    .opacity(isPickerBorderVisible ? 1 : 0)
+            )
             .labelsHidden()
             .onChange(of: selectedHostId) { host in
                 NSLog("Picker selection: \(String(describing: selectedHostId))")
@@ -61,11 +67,26 @@ struct FavoritesView: View {
     
     private func addNewFavoriteHost() {
         
+        animatePickerBorder()
+        
         barCatStore.add(Host(id: UUID().uuidString,
                              name: mainVM.activeHost.name,
                              port: mainVM.activeHost.port))
         
         mainVM.activeHost.validationStatus = .emptyHostname
+    }
+    
+    private func animatePickerBorder() {
+        
+        withAnimation(Animation.easeIn(duration: 0.2)) {
+            isPickerBorderVisible.toggle()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            withAnimation(Animation.linear(duration: 0.4)) {
+                isPickerBorderVisible.toggle()
+            }
+        }
     }
 }
 
