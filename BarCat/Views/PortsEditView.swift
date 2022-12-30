@@ -68,7 +68,9 @@ struct PortsEditView: View {
             case .deleteConfirmation:
                 Button("Delete", role: .destructive) {
                     if let portId = selectedPortId {
-                        delete(portId)
+                        withAnimation {
+                            delete(portId)
+                        }
                     }
                 }
                 Button("Cancel", role: .cancel) { }
@@ -128,7 +130,9 @@ struct PortsEditView: View {
                     Text("")
                         .captionSecondary()
                     Button("Add") {
-                        addNewPort()
+                        withAnimation {
+                            addNewPort()
+                        }
                     }
                     .disabled(portsEditVM.newPort.validationStatus != .valid)
                     .keyboardShortcut(.defaultAction)

@@ -56,7 +56,11 @@ struct FavoritesEditView: View {
         .disabled(selectedHostIds.isEmpty)
         .help("Delete host")
         .alert("Delete these hosts?", isPresented: $displayingDeleteAlert) {
-            Button("Delete", role: .destructive) { delete(selectedHostIds) }
+            Button("Delete", role: .destructive) {
+                withAnimation {
+                    delete(selectedHostIds)
+                }
+            }
             Button("Cancel", role: .cancel) { }
         } message : {
             Text(barCatStore.selectedHostnames(for: selectedHostIds))
@@ -136,7 +140,9 @@ struct FavoritesEditView: View {
                     Text("")
                         .captionSecondary()
                     Button("Add") {
-                        saveNewHost()
+                        withAnimation {
+                            saveNewHost()
+                        }
                     }
                     .disabled(favoritesEditVM.newHost.validationStatus != .valid)
                     .keyboardShortcut(.defaultAction)
