@@ -110,12 +110,19 @@ struct PortsEditView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Port number")
                         .captionSecondary()
-                    TextField("Add port number", text: $portsEditVM.newPortNumber)
+                    TextField("Add port number", text: $portsEditVM.portNumberAsString)
                         .sfMonoFont(.textFieldInput)
-                        .onChange(of: portsEditVM.newPortNumber) { number in
-                            // Workaround for port number handling
-                            // Validation works for Port type but the port number is String
-                            // TODO: 0 is assigned as a default value e.g. when text field contains letters => validator treats text as empty number
+                        /// First check that the input contains only numeric values, revert to previous value if not
+                        .onReceive(Just(portsEditVM.portNumberAsString)) { inputValue in
+                            let numbers = inputValue.filter { "01234567890".contains($0) }
+                            if numbers != inputValue {
+                                self.portsEditVM.portNumberAsString = numbers
+                            }
+                        }
+                        /// Then validate the numeric value
+                        .onChange(of: portsEditVM.portNumberAsString) { number in
+                            /// Validation works for Port type but the port number is String
+                            /// 0 is assigned as a default value if the text field is empty
                             portsEditVM.newPort.number = Int(number) ?? 0
                             self.validate(portsEditVM.newPort)
                         }
@@ -149,7 +156,7 @@ struct PortsEditView: View {
         barCatStore.add(portsEditVM.newPort)
         
         NSLog("Resetting add new port textfields")
-        portsEditVM.newPortNumber = ""
+        portsEditVM.portNumberAsString = ""
         portsEditVM.newPort = Port()
     }
     
