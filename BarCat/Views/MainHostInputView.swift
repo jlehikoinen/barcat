@@ -97,7 +97,6 @@ struct MainHostInputView: View {
         
         withAnimation(.default) {
             mainVM.commandState = .loading
-            mainVM.outputLabel = "Loading..."
         }
         
         do {
@@ -108,11 +107,7 @@ struct MainHostInputView: View {
         }
         
         withAnimation(.default) {
-            if command.exitCode == 0 {
-                mainVM.commandState = .finishedSuccessfully
-            } else {
-                mainVM.commandState = .finishedWithError
-            }
+            mainVM.commandState = command.exitCode == 0 ? .finishedSuccessfully : .finishedWithError
             mainVM.outputLabel = command.output
         }
     }
