@@ -93,8 +93,7 @@ struct MainHostInputView: View {
     
     private func runNetcat() async {
         
-        var exitCode: OSStatus = 0
-        var output = ""
+        var command = Command()
         
         withAnimation(.default) {
             mainVM.commandState = .loading
@@ -102,20 +101,19 @@ struct MainHostInputView: View {
         }
         
         do {
-            (exitCode, output) = try await processUtility.runNetcat(hostname: mainVM.activeHost.name,
+            command = try await processUtility.runNetcat(hostname: mainVM.activeHost.name,
                                                                     portNumber: mainVM.activeHost.port.number)
         } catch {
             NSLog("Error: Command failed")
-            exitCode = 1
         }
         
         withAnimation(.default) {
-            if exitCode == 0 {
+            if command.exitCode == 0 {
                 mainVM.commandState = .finishedSuccessfully
             } else {
                 mainVM.commandState = .finishedWithError
             }
-            mainVM.outputLabel = output
+            mainVM.outputLabel = command.output
         }
     }
 }
