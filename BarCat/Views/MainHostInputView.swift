@@ -63,7 +63,7 @@ struct MainHostInputView: View {
             .onChange(of: $mainVM.activeHost.wrappedValue.port) { selectedPort in
                 NSLog("Port selected: \(selectedPort)")
                 mainVM.resetCommandOutputLabel()
-                mainVM.commandState = .notStarted
+//                mainVM.commandState = .notStarted
             }
             .labelsHidden()
             .frame(width: 80, alignment: .trailing)
