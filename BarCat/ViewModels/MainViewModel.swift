@@ -12,7 +12,6 @@ class MainViewModel: ObservableObject {
     @Published var activeHost = Host()
     @Published var debouncedActiveHost = Host()
     
-    @Published var stateHighlightColor: Color = .clear
     @Published var commandState: CommandState = .notStarted
     @Published var outputLabel: String = ""
     
