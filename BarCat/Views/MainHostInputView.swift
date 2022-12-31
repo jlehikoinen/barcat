@@ -34,10 +34,10 @@ struct MainHostInputView: View {
             
             TextField(Host.namePlaceholder, text: $mainVM.activeHost.name)
                 .sfMonoFont(.textFieldInput)
-                .border(mainVM.commandState.highlightColor)
-                .disabled(mainVM.commandState == .loading)
+                .border(mainVM.command.state.highlightColor)
+                .disabled(mainVM.command.state == .loading)
                 .onChange(of: mainVM.activeHost) { host in
-                    mainVM.resetCommandOutputLabel()
+                    // mainVM.command.state = .notStarted
                     mainVM.activeHost.validationStatus = barCatStore.validateInput(for: host)
                 }
         }
@@ -62,12 +62,11 @@ struct MainHostInputView: View {
             }
             .onChange(of: $mainVM.activeHost.wrappedValue.port) { selectedPort in
                 NSLog("Port selected: \(selectedPort)")
-                mainVM.resetCommandOutputLabel()
-                mainVM.commandState = .notStarted
+                mainVM.command.state = .notStarted
             }
             .labelsHidden()
             .frame(width: 80, alignment: .trailing)
-            .disabled(mainVM.commandState == .loading)
+            .disabled(mainVM.command.state == .loading)
         }
     }
     
@@ -84,7 +83,7 @@ struct MainHostInputView: View {
             } label: {
                 Text("Test")
             }
-            .disabled(mainVM.commandState == .loading || !mainVM.activeHost.isValidHostname)
+            .disabled(mainVM.command.state == .loading || !mainVM.activeHost.isValidHostname)
             .keyboardShortcut(.defaultAction)
         }
     }
@@ -93,27 +92,24 @@ struct MainHostInputView: View {
     
     private func runNetcat() async {
         
-        var command = Command()
-        
         withAnimation(.default) {
-            mainVM.commandState = .loading
-            mainVM.outputLabel = "Loading..."
+            mainVM.command.state = .loading
         }
         
         do {
-            command = try await processUtility.runNetcat(hostname: mainVM.activeHost.name,
-                                                                    portNumber: mainVM.activeHost.port.number)
+            mainVM.command = try await processUtility.runNetcat(hostname: mainVM.activeHost.name,
+                                                                portNumber: mainVM.activeHost.port.number)
         } catch {
             NSLog("Error: Command failed")
         }
         
+        // TODO: Move to vm
         withAnimation(.default) {
-            if command.exitCode == 0 {
-                mainVM.commandState = .finishedSuccessfully
+            if mainVM.command.exitCode == 0 {
+                mainVM.command.state = .finishedSuccessfully
             } else {
-                mainVM.commandState = .finishedWithError
+                mainVM.command.state = .finishedWithError
             }
-            mainVM.outputLabel = command.output
         }
     }
 }

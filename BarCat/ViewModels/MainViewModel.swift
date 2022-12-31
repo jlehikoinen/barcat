@@ -11,24 +11,12 @@ class MainViewModel: ObservableObject {
     
     @Published var activeHost = Host()
     @Published var debouncedActiveHost = Host()
-    
-    @Published var stateHighlightColor: Color = .clear
-    @Published var commandState: CommandState = .notStarted
-    @Published var outputLabel: String = "..."
+    @Published var command = Command()
     
     init() {
         // Delay text input
         $activeHost
             .debounce(for: AppConfig.hostnameInputDelayInSeconds, scheduler: DispatchQueue.main)
             .assign(to: &$debouncedActiveHost)
-    }
-    
-    // MARK: View helper methods
-    
-    func resetCommandOutputLabel() {
-        withAnimation(.default) {
-            self.commandState = .notStarted
-            self.outputLabel = "..."
-        }
     }
 }

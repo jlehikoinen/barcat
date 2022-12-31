@@ -10,7 +10,7 @@ import Foundation
 struct Command {
     
     let exitCode: OSStatus
-    let output: String
+    var output: String
     var state: CommandState
     
     init() {

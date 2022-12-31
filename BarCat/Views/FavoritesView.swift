@@ -44,7 +44,7 @@ struct FavoritesView: View {
                 NSLog("Picker selection: \(String(describing: selectedHostId))")
                 mainVM.activeHost = barCatStore.hostsModel[selectedHostId]
             }
-            .disabled(mainVM.commandState == .loading)
+            .disabled(mainVM.command.state == .loading)
         }
     }
     
@@ -59,7 +59,7 @@ struct FavoritesView: View {
                 Image(systemName: "plus")
             }
             .help("Add current host to favorites")
-            .disabled(!mainVM.activeHost.isValidHostname)
+            .disabled(!mainVM.activeHost.isValidHostname || mainVM.command.state == .loading)
         }
     }
     
