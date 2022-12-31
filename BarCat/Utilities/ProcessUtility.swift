@@ -11,7 +11,7 @@ struct ProcessUtility {
     
     let appPreferences = AppPreferences()
     
-    func runNetcat(hostname: String, portNumber: Int) async throws -> (OSStatus, String) {
+    func runNetcat(hostname: String, portNumber: Int) async throws -> Command {
 
         var commandArguments = Netcat.options + [String(appPreferences.netcatTimeoutInSecs)]
         commandArguments.append(hostname)
@@ -21,7 +21,7 @@ struct ProcessUtility {
     }
     
     // TODO: Make this more generic, now nc specific
-    private func run(command: String, arguments: [String]) async throws -> (OSStatus, String) {
+    private func run(command: String, arguments: [String]) async throws -> Command {
         
         NSLog("Command: \(command) \(arguments)")
         
@@ -44,7 +44,7 @@ struct ProcessUtility {
         
         let output = convertRawOutputToHumanFriendlyFormat(text: rawOutput)
         
-        return (exitCode, output)
+        return Command(exitCode: exitCode, output: output)
     }
     
     private func convertRawOutputToHumanFriendlyFormat(text: String) -> String {

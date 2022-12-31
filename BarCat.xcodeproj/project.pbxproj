@@ -26,6 +26,7 @@
 		683EBE7128DC339600401861 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 683EBE7028DC339600401861 /* Assets.xcassets */; };
 		683EBE7428DC339600401861 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 683EBE7328DC339600401861 /* Preview Assets.xcassets */; };
 		683EBE7F28DC339600401861 /* BarCatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683EBE7E28DC339600401861 /* BarCatTests.swift */; };
+		6871DFE0295FFA4500BAF716 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6871DFDF295FFA4500BAF716 /* Command.swift */; };
 		68858B1C29430453001AFBAD /* NetcatConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68858B1B29430453001AFBAD /* NetcatConfiguration.swift */; };
 		68858B1E29431568001AFBAD /* HostnameErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68858B1D29431568001AFBAD /* HostnameErrorView.swift */; };
 		68917BC3293B62400019B966 /* CommandOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68917BC2293B62400019B966 /* CommandOutputView.swift */; };
@@ -79,6 +80,7 @@
 		683EBE7528DC339600401861 /* BarCat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BarCat.entitlements; sourceTree = "<group>"; };
 		683EBE7A28DC339600401861 /* BarCatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BarCatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		683EBE7E28DC339600401861 /* BarCatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarCatTests.swift; sourceTree = "<group>"; };
+		6871DFDF295FFA4500BAF716 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		68858B1B29430453001AFBAD /* NetcatConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetcatConfiguration.swift; sourceTree = "<group>"; };
 		68858B1D29431568001AFBAD /* HostnameErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostnameErrorView.swift; sourceTree = "<group>"; };
 		68917BC2293B62400019B966 /* CommandOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandOutputView.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				68C3E18D2950D613008FAE94 /* PortsModel.swift */,
 				68EFBFB92930F1E7003DE09D /* Port.swift */,
 				68356608294BA39900F9A9EC /* PortValidationStatus.swift */,
+				6871DFDF295FFA4500BAF716 /* Command.swift */,
 				680BE07D28EFF6D300144D57 /* CommandState.swift */,
 				683881B7293A25C500DB6D91 /* ActiveHostLocation.swift */,
 			);
@@ -361,6 +364,7 @@
 				68F4B60829279B5D000B097C /* PortsEditView.swift in Sources */,
 				6808DE112949E4FB007A62D7 /* HostValidationStatus.swift in Sources */,
 				681A7AA3294DF14200989048 /* HostnameRowErrorView.swift in Sources */,
+				6871DFE0295FFA4500BAF716 /* Command.swift in Sources */,
 				683EBE6D28DC339500401861 /* BarCatApp.swift in Sources */,
 				681A7AA1294DEFA500989048 /* PortErrorView.swift in Sources */,
 				6838F72E28DDA497005819B7 /* FavoritesView.swift in Sources */,

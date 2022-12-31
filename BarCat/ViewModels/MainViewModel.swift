@@ -12,9 +12,8 @@ class MainViewModel: ObservableObject {
     @Published var activeHost = Host()
     @Published var debouncedActiveHost = Host()
     
-    @Published var stateHighlightColor: Color = .clear
     @Published var commandState: CommandState = .notStarted
-    @Published var outputLabel: String = "..."
+    @Published var outputLabel: String = ""
     
     init() {
         // Delay text input
@@ -28,7 +27,6 @@ class MainViewModel: ObservableObject {
     func resetCommandOutputLabel() {
         withAnimation(.default) {
             self.commandState = .notStarted
-            self.outputLabel = "..."
         }
     }
 }

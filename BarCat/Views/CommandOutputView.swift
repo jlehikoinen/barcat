@@ -9,10 +9,20 @@ import SwiftUI
 
 struct CommandOutputView: View {
     
-    var outputText: String
+    @ObservedObject var mainVM: MainViewModel
     
     var body: some View {
-        Text(outputText)
+        
+        var outputText: String
+        
+        switch mainVM.commandState {
+        case .notStarted: outputText = "..."
+        case .loading: outputText = "Loading..."
+        case .finishedSuccessfully: outputText = mainVM.outputLabel
+        case .finishedWithError: outputText = mainVM.outputLabel
+        }
+        
+        return Text(outputText)
             .font(.footnote )
             .fixedSize(horizontal: false, vertical: true)
             .textSelection(.enabled)
@@ -21,6 +31,6 @@ struct CommandOutputView: View {
 
 struct CommandOutputView_Previews: PreviewProvider {
     static var previews: some View {
-        CommandOutputView(outputText: "Sample output")
+        CommandOutputView(mainVM: MainViewModel())
     }
 }

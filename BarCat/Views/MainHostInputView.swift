@@ -63,7 +63,6 @@ struct MainHostInputView: View {
             .onChange(of: $mainVM.activeHost.wrappedValue.port) { selectedPort in
                 NSLog("Port selected: \(selectedPort)")
                 mainVM.resetCommandOutputLabel()
-                mainVM.commandState = .notStarted
             }
             .labelsHidden()
             .frame(width: 80, alignment: .trailing)
@@ -93,29 +92,22 @@ struct MainHostInputView: View {
     
     private func runNetcat() async {
         
-        var exitCode: OSStatus = 0
-        var output = ""
+        var command = Command()
         
         withAnimation(.default) {
             mainVM.commandState = .loading
-            mainVM.outputLabel = "Loading..."
         }
         
         do {
-            (exitCode, output) = try await processUtility.runNetcat(hostname: mainVM.activeHost.name,
+            command = try await processUtility.runNetcat(hostname: mainVM.activeHost.name,
                                                                     portNumber: mainVM.activeHost.port.number)
         } catch {
             NSLog("Error: Command failed")
-            exitCode = 1
         }
         
         withAnimation(.default) {
-            if exitCode == 0 {
-                mainVM.commandState = .finishedSuccessfully
-            } else {
-                mainVM.commandState = .finishedWithError
-            }
-            mainVM.outputLabel = output
+            mainVM.commandState = command.exitCode == 0 ? .finishedSuccessfully : .finishedWithError
+            mainVM.outputLabel = command.output
         }
     }
 }

@@ -9,7 +9,6 @@ import SwiftUI
 
 class BarCatStore: ObservableObject {
     
-    //
     @Published var portsModel = PortsModel()
     @Published var hostsModel = HostsModel()
     
@@ -37,7 +36,7 @@ class BarCatStore: ObservableObject {
     // MARK: Favorite hosts methods
     
     func selectedHostnames(for ids: Set<Host.ID>) -> String {
-        return hostsModel.selectedHostnames(for: ids)
+        hostsModel.selectedHostnames(for: ids)
     }
     
     func add(_ host: Host) {
@@ -53,7 +52,7 @@ class BarCatStore: ObservableObject {
     }
     
     func favoriteHostsContainsPortThatWillBeDeleted(_ portId: Port.ID) -> Bool {
-        return hostsModel.favoriteHostsContainsPortThatWillBeDeleted(portId)
+        hostsModel.favoriteHostsContainsPortThatWillBeDeleted(portId)
     }
     
     func validateInput(for host: Host) -> HostValidationStatus {
@@ -75,6 +74,6 @@ class BarCatStore: ObservableObject {
     }
     
     func validateInput(for port: Port) -> PortValidationStatus {
-        return portsModel.validateInput(for: port)
+        portsModel.validateInput(for: port)
     }
 }
