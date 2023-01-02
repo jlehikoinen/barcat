@@ -94,7 +94,7 @@ struct HostsModel {
     func hostValidator(_ host: Host) -> HostValidationStatus {
         
         // Note order
-        if favoriteHostsContainsDuplicate(host) { return .duplicate }
+        if favoriteHostsContainsActive(host) { return .duplicate }
         if host.name.isEmpty { return .emptyHostname }
         if !host.isValidHostname { return .invalidHostname }
         
@@ -114,6 +114,10 @@ struct HostsModel {
     // MARK: Duplicates
     
     // These are (temporarily) public because tests
+    
+    func favoriteHostsContainsActive(_ host: Host) -> Bool {
+        self.favoriteHosts.map { $0.nameAndPortAsString }.contains(host.nameAndPortAsString)
+    }
     
     func favoriteHostsContainsDuplicate(_ host: Host) -> Bool {
         favoriteHosts.filter{ $0.nameAndPortAsString == host.nameAndPortAsString }.count > 1
