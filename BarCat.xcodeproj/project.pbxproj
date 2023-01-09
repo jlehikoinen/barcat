@@ -134,16 +134,8 @@
 				68F4B605292799CC000B097C /* MenuBarWindowView.swift */,
 				68C3B1B42918F7B10045EDAD /* HeaderView.swift */,
 				68F4B60329279936000B097C /* HeaderTabView.swift */,
-				683EBE6E28DC339500401861 /* MainView.swift */,
-				6838F72928DD8412005819B7 /* MainHostInputView.swift */,
-				68917BC2293B62400019B966 /* CommandOutputView.swift */,
-				6838F72D28DDA497005819B7 /* FavoritesView.swift */,
-				68C3B1B62918F7F30045EDAD /* SettingsView.swift */,
-				68006E42291BDE820022CEAB /* FavoritesEditView.swift */,
-				68858B1D29431568001AFBAD /* HostnameErrorView.swift */,
-				681A7AA2294DF14200989048 /* HostnameRowErrorView.swift */,
-				68F4B60729279B5D000B097C /* PortsEditView.swift */,
-				681A7AA0294DEFA500989048 /* PortErrorView.swift */,
+				6843C2952962D14200FB0162 /* MainViews */,
+				6843C2942962D12700FB0162 /* SettingsViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -208,6 +200,30 @@
 				683EBE7E28DC339600401861 /* BarCatTests.swift */,
 			);
 			path = BarCatTests;
+			sourceTree = "<group>";
+		};
+		6843C2942962D12700FB0162 /* SettingsViews */ = {
+			isa = PBXGroup;
+			children = (
+				68C3B1B62918F7F30045EDAD /* SettingsView.swift */,
+				68006E42291BDE820022CEAB /* FavoritesEditView.swift */,
+				68858B1D29431568001AFBAD /* HostnameErrorView.swift */,
+				681A7AA2294DF14200989048 /* HostnameRowErrorView.swift */,
+				68F4B60729279B5D000B097C /* PortsEditView.swift */,
+				681A7AA0294DEFA500989048 /* PortErrorView.swift */,
+			);
+			path = SettingsViews;
+			sourceTree = "<group>";
+		};
+		6843C2952962D14200FB0162 /* MainViews */ = {
+			isa = PBXGroup;
+			children = (
+				683EBE6E28DC339500401861 /* MainView.swift */,
+				6838F72928DD8412005819B7 /* MainHostInputView.swift */,
+				68917BC2293B62400019B966 /* CommandOutputView.swift */,
+				6838F72D28DDA497005819B7 /* FavoritesView.swift */,
+			);
+			path = MainViews;
 			sourceTree = "<group>";
 		};
 		68927C4728EEA23A00658DB1 /* Models */ = {

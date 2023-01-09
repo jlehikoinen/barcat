@@ -49,6 +49,10 @@ extension Host {
         let pattern = /[\w-]+\.[\w\.-]+[a-zA-Z0-9]$/
         return self.name.starts(with: pattern)
     }
+    
+    var wrappedValidationStatus: HostValidationStatus {
+        validationStatus ?? .invalidHostname
+    }
 }
 
 // MARK: Placeholders

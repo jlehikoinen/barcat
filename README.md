@@ -8,8 +8,8 @@ BarCat is a simple SwiftUI menu bar app for testing firewall ports. BarCat uses 
 
 - Minimum macOS version: macOS 13 Ventura
 
-## Current activities 
+## Current activities
 
-Slowly refactoring BarCatStore view model into smaller pieces.
+Making small changes here and there.
 
 See `refactor_store` branch for latest trials and errors.

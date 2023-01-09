@@ -59,7 +59,7 @@ struct FavoritesView: View {
                 Image(systemName: "plus")
             }
             .help("Add current host to favorites")
-            .disabled(!mainVM.activeHost.isValidHostname || mainVM.commandState == .loading)
+            .disabled(mainVM.activeHost.wrappedValidationStatus != .valid || mainVM.commandState == .loading)
         }
     }
     
