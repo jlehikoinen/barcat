@@ -23,7 +23,7 @@ struct CommandOutputView: View {
         }
         
         return Text(outputText)
-            .font(.footnote )
+            .font(.system(.footnote, design: .monospaced))
             .fixedSize(horizontal: false, vertical: true)
             .textSelection(.enabled)
     }

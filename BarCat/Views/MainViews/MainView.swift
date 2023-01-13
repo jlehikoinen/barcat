@@ -21,6 +21,9 @@ struct MainView: View {
             FavoritesView(mainVM: mainVM)
         }
         .padding()
+        .onAppear {
+            mainVM.resetCommandOutputLabel()
+        }
     }
 }
 
