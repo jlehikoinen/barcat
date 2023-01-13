@@ -49,7 +49,9 @@ extension Port {
 
 extension Port {
     
-    static let portNumberRange: ClosedRange = 1...65536
+    static let portNumberRange: ClosedRange = 1...65535
+    static let reservedPortNumberRange: ClosedRange = 1...1023
+    static let userPortNumberRange: ClosedRange = 1024...65535
     static let defaultPortNumber = 443
     static let defaultPort = Port(id: factoryHttpsPortUuid, number: 443, description: "https")
 }

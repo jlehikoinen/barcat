@@ -48,17 +48,7 @@ struct MainHostInputView: View {
         VStack(alignment: .leading, spacing: 2) {
             Text("Port")
                 .captionSecondary()
-            
-            Picker("Port", selection: $mainVM.activeHost.port) {
-                ForEach(barCatStore.sortedPorts, id: \.self) { port in
-                    HStack {
-                        Spacer()
-                        Text(String(port.number))
-                            .font(.system(size: 13, design: .monospaced))
-                            .tag(Port.ID?.some(port.id))
-                    }
-                }
-            }
+            PortPickerView(selectedPort: $mainVM.activeHost.port, ports: barCatStore.sortedPorts)
             .onChange(of: $mainVM.activeHost.wrappedValue.port) { selectedPort in
                 NSLog("Port selected: \(selectedPort)")
                 mainVM.resetCommandOutputLabel()

@@ -95,16 +95,7 @@ struct FavoritesEditView: View {
             .width(min: 180, ideal: 180, max: 200)
             
             TableColumn("Port") { $host in
-                Picker("Port", selection: $host.port) {
-                    ForEach(barCatStore.sortedPorts, id: \.self) { port in
-                        HStack {
-                            Spacer()
-                            Text(String(port.number))
-                                .font(.system(size: 12, design: .monospaced))
-                                .tag(Port.ID?.some(port.id))
-                        }
-                    }
-                }
+                PortPickerView(selectedPort: $host.port, ports: barCatStore.sortedPorts)
                 .labelsHidden()
                 .frame(width: 80, alignment: .trailing)
                 .onChange(of: host.port) { _ in
@@ -132,7 +123,12 @@ struct FavoritesEditView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Port")
                         .captionSecondary()
-                    portPickerNew
+                    PortPickerView(selectedPort: $favoritesEditVM.newHost.port, ports: barCatStore.sortedPorts)
+                        .labelsHidden()
+                        .onChange(of: favoritesEditVM.newHost.port) { _ in
+                            NSLog("\(favoritesEditVM.newHost.port)")
+                            favoritesEditVM.newHost.validationStatus = barCatStore.validateInput(for: favoritesEditVM.newHost)
+                        }
                         .frame(width: 80, alignment: .trailing)
                 }
                 
@@ -149,25 +145,6 @@ struct FavoritesEditView: View {
                 }
             }
             HostnameErrorView(host: favoritesEditVM.debouncedNewHost, location: .editFavoritesNewHostView)
-        }
-    }
-    
-    var portPickerNew: some View {
-        
-        Picker("Port", selection: $favoritesEditVM.newHost.port) {
-            ForEach(barCatStore.sortedPorts, id: \.self) { port in
-                HStack {
-                    Spacer()
-                    Text(String(port.number))
-                        .font(.system(size: 13, design: .monospaced))
-                        .tag(Port.ID?.some(port.id))
-                }
-            }
-        }
-        .labelsHidden()
-        .onChange(of: favoritesEditVM.newHost.port) { _ in
-            NSLog("\(favoritesEditVM.newHost.port)")
-            favoritesEditVM.newHost.validationStatus = barCatStore.validateInput(for: favoritesEditVM.newHost)
         }
     }
     
