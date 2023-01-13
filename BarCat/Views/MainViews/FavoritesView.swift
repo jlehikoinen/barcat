@@ -30,7 +30,7 @@ struct FavoritesView: View {
                 Text("...").tag(Host.ID?.none)
                 ForEach(barCatStore.sortedFavoriteHosts, id: \.self) { host in
                     Text(host.nameAndPortAsString)
-                        .font(Font.custom("SF Mono", size: 12))
+                        .font(.system(size: 12, design: .monospaced))
                         .tag(Host.ID?.some(host.id))
                 }
             }
@@ -42,6 +42,8 @@ struct FavoritesView: View {
             .labelsHidden()
             .onChange(of: selectedHostId) { host in
                 NSLog("Picker selection: \(String(describing: selectedHostId))")
+                // Selected FavoritesView host => MainHostInputView textfield and port picker
+                // Use id to map correct host using hostsModel subscript and assign it to active host via mainVM
                 mainVM.activeHost = barCatStore.hostsModel[selectedHostId]
             }
             .disabled(mainVM.commandState == .loading)

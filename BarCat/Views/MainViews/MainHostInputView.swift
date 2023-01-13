@@ -33,7 +33,7 @@ struct MainHostInputView: View {
                 .captionSecondary()
             
             TextField(Host.namePlaceholder, text: $mainVM.activeHost.name)
-                .sfMonoFont(.textFieldInput)
+                .font(.system(size: 13, design: .monospaced))
                 .border(mainVM.commandState.highlightColor)
                 .disabled(mainVM.commandState == .loading)
                 .onChange(of: mainVM.activeHost) { host in
@@ -54,8 +54,7 @@ struct MainHostInputView: View {
                     HStack {
                         Spacer()
                         Text(String(port.number))
-                            .font(Font.custom("SF Mono", size: 13))
-                            // .sfMonoFont(.textFieldInput)
+                            .font(.system(size: 13, design: .monospaced))
                             .tag(Port.ID?.some(port.id))
                     }
                 }

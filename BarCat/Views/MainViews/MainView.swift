@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MainView: View {
     
-    @ObservedObject var mainVM: MainViewModel = .init()
+    // MainViewModel is used for transferring data between these views
+    @StateObject var mainVM: MainViewModel = .init()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {

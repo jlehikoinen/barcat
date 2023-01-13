@@ -88,7 +88,7 @@ struct PortsEditView: View {
             
             TableColumn("Port number") { port in
                 Text(String(port.number))
-                    .sfMonoFont(.tableRow)
+                    .font(.system(size: 12, design: .monospaced))
                     .padding(.vertical, 2)
             }
             .width(min: 80, ideal: 80, max: 100)
@@ -96,7 +96,7 @@ struct PortsEditView: View {
             
             TableColumn("Description") { port in
                 Text(port.description)
-                    .sfMonoFont(.tableRow)
+                    .font(.system(size: 12, design: .monospaced))
                     .help(port.description)
             }
             .width(min: 200, ideal: 200, max: 220)
@@ -111,7 +111,7 @@ struct PortsEditView: View {
                     Text("Port number")
                         .captionSecondary()
                     TextField("Add port number", text: $portsEditVM.portNumberAsString)
-                        .sfMonoFont(.textFieldInput)
+                        .font(.system(size: 13, design: .monospaced))
                         /// First check that the input contains only numeric values, revert to previous value if not
                         .onReceive(Just(portsEditVM.portNumberAsString)) { inputValue in
                             let numbers = inputValue.filter { "01234567890".contains($0) }
@@ -131,7 +131,7 @@ struct PortsEditView: View {
                     Text("Description")
                         .captionSecondary()
                     TextField("Add description", text: $portsEditVM.newPort.description)
-                        .sfMonoFont(.textFieldInput)
+                        .font(.system(size: 13, design: .monospaced))
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text("")

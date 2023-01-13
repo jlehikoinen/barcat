@@ -74,7 +74,7 @@ struct FavoritesEditView: View {
             TableColumn("Hostname") { $host in
                 VStack(alignment: .leading) {
                     TextField(Host.namePlaceholder, text: $host.name)
-                        .sfMonoFont(.tableRow)
+                        .font(.system(size: 12, design: .monospaced))
                         // Quite ugly with .squareBorder style, but at least the "q"s and "g"s are vertically visible
                         .textFieldStyle(.squareBorder)
                         .onChange(of: host) { [host] newHost in
@@ -100,7 +100,7 @@ struct FavoritesEditView: View {
                         HStack {
                             Spacer()
                             Text(String(port.number))
-                                .font(Font.custom("SF Mono", size: 12))
+                                .font(.system(size: 12, design: .monospaced))
                                 .tag(Port.ID?.some(port.id))
                         }
                     }
@@ -123,7 +123,7 @@ struct FavoritesEditView: View {
                     Text("Hostname")
                         .captionSecondary()
                     TextField(Host.namePlaceholder, text: $favoritesEditVM.newHost.name)
-                        .sfMonoFont(.textFieldInput)
+                        .font(.system(size: 13, design: .monospaced))
                         .onChange(of: favoritesEditVM.newHost) { _ in
                             favoritesEditVM.newHost.validationStatus = barCatStore.validateInput(for: favoritesEditVM.newHost)
                         }
@@ -159,7 +159,7 @@ struct FavoritesEditView: View {
                 HStack {
                     Spacer()
                     Text(String(port.number))
-                        .font(Font.custom("SF Mono", size: 13))
+                        .font(.system(size: 13, design: .monospaced))
                         .tag(Port.ID?.some(port.id))
                 }
             }
