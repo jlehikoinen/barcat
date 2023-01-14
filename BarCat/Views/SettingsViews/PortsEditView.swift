@@ -5,7 +5,6 @@
 //  Created by Janne Lehikoinen on 18.11.2022.
 //
 
-import Combine
 import SwiftUI
 
 struct PortsEditView: View {
@@ -112,19 +111,8 @@ struct PortsEditView: View {
                         .captionSecondary()
                     TextField("Add port number", text: $portsEditVM.portNumberAsString)
                         .font(.system(size: 13, design: .monospaced))
-                        /// First check that the input contains only numeric values, revert to previous value if not
-                        .onReceive(Just(portsEditVM.portNumberAsString)) { inputValue in
-                            let numbers = inputValue.filter { "01234567890".contains($0) }
-                            if numbers != inputValue {
-                                self.portsEditVM.portNumberAsString = numbers
-                            }
-                        }
-                        /// Then validate the numeric value
-                        .onChange(of: portsEditVM.portNumberAsString) { number in
-                            /// Validation works for Port type but the port number is String
-                            /// 0 is assigned as a default value if the text field is empty
-                            portsEditVM.newPort.number = Int(number) ?? 0
-                            self.validate(portsEditVM.newPort)
+                        .onChange(of: portsEditVM.portNumberAsString) { inputValue in
+                            portInputValidation(inputValue)
                         }
                 }
                 VStack(alignment: .leading, spacing: 2) {
@@ -151,6 +139,22 @@ struct PortsEditView: View {
     
     // MARK: View helper methods
     
+    // Move this to portsEditVM and get rid of barCatStore.validateInput dependency?
+    private func portInputValidation(_ inputValue: String) {
+        
+        /// First check that the input contains only numeric values, revert input to previous value if not
+        let numbers = inputValue.filter { "01234567890".contains($0) }
+        if numbers == inputValue {
+            /// Validation works for Port type but the port number is String
+            /// 0 is assigned as a default value if the text field is empty
+            portsEditVM.newPort.number = Int(inputValue) ?? 0
+            /// Debouncing happens in portsEditVM
+            portsEditVM.newPort.validationStatus = barCatStore.validateInput(for: portsEditVM.newPort)
+        } else {
+            self.portsEditVM.portNumberAsString = numbers
+        }
+    }
+    
     private func addNewPort() {
         
         barCatStore.add(portsEditVM.newPort)
@@ -158,10 +162,6 @@ struct PortsEditView: View {
         NSLog("Resetting add new port textfields")
         portsEditVM.portNumberAsString = ""
         portsEditVM.newPort = Port()
-    }
-    
-    private func validate(_ port: Port) {
-        portsEditVM.newPort.validationStatus = barCatStore.validateInput(for: port)
     }
     
     private func displayCustomDeleteAlert(_ portId: Port.ID) {
@@ -192,5 +192,6 @@ struct PortsEditView: View {
 struct PortsEditView_Previews: PreviewProvider {
     static var previews: some View {
         PortsEditView()
+            .environmentObject(BarCatStore())
     }
 }
