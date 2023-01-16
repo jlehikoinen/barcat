@@ -20,7 +20,7 @@ struct HostsModel {
     // MARK: Computed properties
     
     var sortedFavoriteHosts: [Host] {
-        favoriteHosts.sorted { $0.nameAndPortAsString < $1.nameAndPortAsString }
+        favoriteHosts.sorted { $0.nameAndPortNumber < $1.nameAndPortNumber }
     }
     
     // MARK: Helper methods
@@ -31,7 +31,7 @@ struct HostsModel {
         
         for id in ids {
             if let index = favoriteHosts.firstIndex(where: { $0.id == id } ) {
-                hostnames.append(favoriteHosts[index].nameAndPortAsString)
+                hostnames.append(favoriteHosts[index].nameAndPortNumber)
             }
         }
         
@@ -64,7 +64,7 @@ struct HostsModel {
         // favoriteHosts will update anyway before this method is called
         // this method updates only host's validationStatus and if it's ok then defaults will be saved
         
-        NSLog("Updating \(currentHost.nameAndPortAsString) -> \(newHost.nameAndPortAsString)")
+        NSLog("Updating \(currentHost.nameAndPortNumber) -> \(newHost.nameAndPortNumber)")
         
         if let index = favoriteHosts.firstIndex(where: { $0.id == newHost.id } ) {
             
@@ -116,11 +116,11 @@ struct HostsModel {
     // These are (temporarily) public because tests
     
     func favoriteHostsContainsActive(_ host: Host) -> Bool {
-        self.favoriteHosts.map { $0.nameAndPortAsString }.contains(host.nameAndPortAsString)
+        self.favoriteHosts.map { $0.nameAndPortNumber }.contains(host.nameAndPortNumber)
     }
     
     func favoriteHostsContainsDuplicate(_ host: Host) -> Bool {
-        favoriteHosts.filter{ $0.nameAndPortAsString == host.nameAndPortAsString }.count > 1
+        favoriteHosts.filter{ $0.nameAndPortNumber == host.nameAndPortNumber }.count > 1
     }
     
     // MARK: Host subscript

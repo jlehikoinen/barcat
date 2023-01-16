@@ -27,7 +27,7 @@ struct Host {
     }
     
     static func < (lhs: Host, rhs: Host) -> Bool {
-        lhs.nameAndPortAsString < rhs.nameAndPortAsString
+        lhs.nameAndPortNumber < rhs.nameAndPortNumber
     }
 }
 
@@ -40,7 +40,7 @@ extension Host: Comparable {}
 
 extension Host {
     
-    var nameAndPortAsString: String {
+    var nameAndPortNumber: String {
         "\(name) : \(port.number)"
     }
     

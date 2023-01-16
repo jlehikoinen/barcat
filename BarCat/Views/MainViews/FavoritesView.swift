@@ -29,7 +29,7 @@ struct FavoritesView: View {
             Picker("Favorites", selection: $selectedHostId) {
                 Text("...").tag(Host.ID?.none)
                 ForEach(barCatStore.sortedFavoriteHosts, id: \.self) { host in
-                    Text(host.nameAndPortAsString)
+                    Text(host.nameAndPortNumber)
                         .font(.system(size: 12, design: .monospaced))
                         .tag(Host.ID?.some(host.id))
                 }
