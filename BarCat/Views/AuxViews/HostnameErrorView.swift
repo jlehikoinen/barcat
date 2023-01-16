@@ -26,7 +26,7 @@ struct HostnameErrorView: View {
                         .captionHidden()
                 } else {
                     Text(HostValidationStatus.duplicate.description)
-                        .font(.caption)
+                        .captionRed()
                 }
             case .emptyHostname:
                 Text(HostValidationStatus.emptyHostname.description)

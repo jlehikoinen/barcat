@@ -75,8 +75,6 @@ struct FavoritesEditView: View {
                 VStack(alignment: .leading) {
                     TextField(Host.namePlaceholder, text: $host.name)
                         .font(.system(size: 12, design: .monospaced))
-                        // Quite ugly with .squareBorder style, but at least the "q"s and "g"s are vertically visible
-                        .textFieldStyle(.squareBorder)
                         .onChange(of: host) { [host] newHost in
                             newHostPublisher.send(newHost)
                             barCatStore.update(host, to: newHost)

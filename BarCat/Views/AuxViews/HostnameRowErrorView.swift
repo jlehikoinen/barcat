@@ -20,7 +20,7 @@ struct HostnameRowErrorView: View {
                     .captionRed()
             case .duplicate:
                 Text(HostValidationStatus.duplicate.description)
-                    .font(.caption)
+                    .captionRed()
             case .emptyHostname:
                 Text(HostValidationStatus.emptyHostname.description)
                     .captionRed()
