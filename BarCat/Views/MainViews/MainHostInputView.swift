@@ -52,7 +52,7 @@ struct MainHostInputView: View {
         VStack(alignment: .leading, spacing: 2) {
             Text("Port")
                 .captionSecondary()
-            PortPickerView(selectedPort: $mainVM.activeHost.port, ports: barCatStore.sortedPorts)
+            PortPicker(selectedPort: $mainVM.activeHost.port, ports: barCatStore.sortedPorts)
             .onChange(of: $mainVM.activeHost.wrappedValue.port) { selectedPort in
                 NSLog("Port selected: \(selectedPort)")
                 mainVM.resetCommandOutputLabel()

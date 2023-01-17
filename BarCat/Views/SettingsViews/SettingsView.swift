@@ -34,7 +34,6 @@ struct SettingsView: View {
             TextField("", value: $netcatTimeoutInSeconds, formatter: NumberFormatter())
                 .frame(width: 50)
         }
-        .padding(.horizontal)
     }
     
     var editFavoritesButton: some View {

@@ -1,5 +1,5 @@
 //
-//  PortPickerView.swift
+//  PortPicker.swift
 //  BarCat
 //
 //  Created by Janne Lehikoinen on 13.1.2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PortPickerView: View {
+struct PortPicker: View {
     
     @Binding var selectedPort: Port
     var ports: [Port]
@@ -39,6 +39,6 @@ struct PortPickerView: View {
 
 struct PortPickerView_Previews: PreviewProvider {
     static var previews: some View {
-        PortPickerView(selectedPort: .constant(.defaultPort), ports: [.defaultPort])
+        PortPicker(selectedPort: .constant(.defaultPort), ports: [.defaultPort])
     }
 }

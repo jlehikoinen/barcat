@@ -93,7 +93,7 @@ struct FavoritesEditView: View {
             .width(min: 180, ideal: 180, max: 200)
             
             TableColumn("Port") { $host in
-                PortPickerView(selectedPort: $host.port, ports: barCatStore.sortedPorts)
+                PortPicker(selectedPort: $host.port, ports: barCatStore.sortedPorts)
                 .labelsHidden()
                 .frame(width: 80, alignment: .trailing)
                 .onChange(of: host.port) { _ in
@@ -108,20 +108,14 @@ struct FavoritesEditView: View {
         
         VStack(alignment: .leading) {
             HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Hostname")
-                        .captionSecondary()
-                    TextField(Host.namePlaceholder, text: $favoritesEditVM.newHost.name)
-                        .font(.system(size: 13, design: .monospaced))
-                        .onChange(of: favoritesEditVM.newHost) { _ in
-                            favoritesEditVM.newHost.validationStatus = barCatStore.validateInput(for: favoritesEditVM.newHost)
-                        }
-                }
-                
+                LabeledTextField("Hostname", placeholderText: Host.namePlaceholder, text: $favoritesEditVM.newHost.name)
+                    .onChange(of: favoritesEditVM.newHost) { _ in
+                        favoritesEditVM.newHost.validationStatus = barCatStore.validateInput(for: favoritesEditVM.newHost)
+                    }
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Port")
                         .captionSecondary()
-                    PortPickerView(selectedPort: $favoritesEditVM.newHost.port, ports: barCatStore.sortedPorts)
+                    PortPicker(selectedPort: $favoritesEditVM.newHost.port, ports: barCatStore.sortedPorts)
                         .labelsHidden()
                         .onChange(of: favoritesEditVM.newHost.port) { _ in
                             NSLog("\(favoritesEditVM.newHost.port)")

@@ -106,21 +106,11 @@ struct PortsEditView: View {
         
         VStack(alignment: .leading) {
             HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Port number")
-                        .captionSecondary()
-                    TextField("Add port number", text: $portsEditVM.portNumberAsString)
-                        .font(.system(size: 13, design: .monospaced))
-                        .onChange(of: portsEditVM.portNumberAsString) { inputValue in
-                            portInputValidation(inputValue)
-                        }
-                }
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Description")
-                        .captionSecondary()
-                    TextField("Add description", text: $portsEditVM.newPort.description)
-                        .font(.system(size: 13, design: .monospaced))
-                }
+                LabeledTextField("Port number", placeholderText: "Add port number", text: $portsEditVM.portNumberAsString)
+                    .onChange(of: portsEditVM.portNumberAsString) { inputValue in
+                        portInputValidation(inputValue)
+                    }
+                LabeledTextField("Description", placeholderText: "Add description", text: $portsEditVM.newPort.description)
                 VStack(alignment: .leading, spacing: 2) {
                     Text("")
                         .captionSecondary()
