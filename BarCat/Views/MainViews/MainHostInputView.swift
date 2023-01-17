@@ -14,6 +14,9 @@ struct MainHostInputView: View {
     @EnvironmentObject var barCatStore: BarCatStore
     @ObservedObject var mainVM: MainViewModel
     
+    // Animation
+    private let minScaleRate: CGFloat = 0.88
+    
     var body: some View {
         
         VStack(alignment: .leading) {
@@ -40,6 +43,7 @@ struct MainHostInputView: View {
                     mainVM.resetCommandOutputLabel()
                     mainVM.activeHost.validationStatus = barCatStore.validateInput(for: host)
                 }
+                .scaleEffect(mainVM.isHostAnimating ? minScaleRate : 1)
         }
     }
     
@@ -56,6 +60,7 @@ struct MainHostInputView: View {
             .labelsHidden()
             .frame(width: 80, alignment: .trailing)
             .disabled(mainVM.commandState == .loading)
+            .scaleEffect(mainVM.isHostAnimating ? minScaleRate : 1)
         }
     }
     

@@ -15,6 +15,8 @@ class MainViewModel: ObservableObject {
     @Published var commandState: CommandState = .notStarted
     @Published var outputLabel: String = ""
     
+    @Published var isHostAnimating = false
+    
     init() {
         // Delay text input
         $activeHost
@@ -27,6 +29,19 @@ class MainViewModel: ObservableObject {
     func resetCommandOutputLabel() {
         withAnimation(.default) {
             self.commandState = .notStarted
+        }
+    }
+    
+    func animateHostInputFields() {
+        
+        withAnimation(Animation.easeIn(duration: 0.2)) {
+            self.isHostAnimating.toggle()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            withAnimation(Animation.easeOut(duration: 0.2)) {
+                self.isHostAnimating.toggle()
+            }
         }
     }
 }

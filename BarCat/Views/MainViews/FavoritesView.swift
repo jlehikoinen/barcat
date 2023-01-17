@@ -45,6 +45,7 @@ struct FavoritesView: View {
                 // Selected FavoritesView host => MainHostInputView textfield and port picker
                 // Use id to map correct host using hostsModel subscript and assign it to active host via mainVM
                 mainVM.activeHost = barCatStore.hostsModel[selectedHostId]
+                mainVM.animateHostInputFields()
             }
             .disabled(mainVM.commandState == .loading)
         }
@@ -85,7 +86,7 @@ struct FavoritesView: View {
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            withAnimation(Animation.linear(duration: 0.4)) {
+            withAnimation(Animation.easeOut(duration: 0.4)) {
                 isPickerBorderVisible.toggle()
             }
         }
