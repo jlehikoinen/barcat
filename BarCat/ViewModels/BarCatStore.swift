@@ -9,8 +9,8 @@ import SwiftUI
 
 class BarCatStore: ObservableObject {
     
-    @Published var portsModel = PortsModel()
-    @Published var hostsModel = HostsModel()
+    @Published var portCollection = PortCollection()
+    @Published var hostsModel = HostCollection()
     
     // MARK: Host convenience variables
     
@@ -26,11 +26,11 @@ class BarCatStore: ObservableObject {
     // MARK: Port convenience variables
     
     var ports: [Port] {
-        self.portsModel.ports
+        self.portCollection.ports
     }
     
     var sortedPorts: [Port] {
-        self.portsModel.sortedPorts
+        self.portCollection.sortedPorts
     }
     
     // MARK: Favorite hosts methods
@@ -62,18 +62,18 @@ class BarCatStore: ObservableObject {
     // MARK: Port methods
     
     func selectedPortNumber(for id: Port.ID) -> String {
-        portsModel.selectedPortNumber(for: id)
+        portCollection.selectedPortNumber(for: id)
     }
     
     func add(_ port: Port) {
-        portsModel.add(port)
+        portCollection.add(port)
     }
     
     func deletePort(_ id: Port.ID) {
-        portsModel.delete(id)
+        portCollection.delete(id)
     }
     
     func validateInput(for port: Port) -> PortValidationStatus {
-        portsModel.validateInput(for: port)
+        portCollection.validateInput(for: port)
     }
 }

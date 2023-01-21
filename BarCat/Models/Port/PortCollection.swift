@@ -1,5 +1,5 @@
 //
-//  PortsModel.swift
+//  PortCollection.swift
 //  BarCat
 //
 //  Created by Janne Lehikoinen on 19.12.2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PortsModel {
+struct PortCollection {
     
     let appPreferences = AppPreferences()
     
@@ -22,6 +22,10 @@ struct PortsModel {
     var sortedPorts: [Port] {
         ports.sorted { $0.number < $1.number }
     }
+    
+//    var allPortNumbers: [Int] {
+//        ports.map(\.number)
+//    }
     
     // MARK: CRUD methods
     

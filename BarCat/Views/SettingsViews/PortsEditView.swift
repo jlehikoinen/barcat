@@ -174,8 +174,9 @@ struct PortsEditView: View {
     
     /// Use this ad-hoc sorting method when view loads
     /// List of ports is not sorted by default so when adding a new port the port appears on top of the list
+    /// That's why unsorted ports are used in portsTable var
     private func displaySortedPorts() {
-        barCatStore.portsModel.ports.sort()
+        barCatStore.portCollection.ports.sort()
     }
 }
 

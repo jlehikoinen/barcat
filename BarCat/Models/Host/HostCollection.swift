@@ -1,5 +1,5 @@
 //
-//  HostsModel.swift
+//  HostCollection.swift
 //  BarCat
 //
 //  Created by Janne Lehikoinen on 19.12.2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HostsModel {
+struct HostCollection {
     
     let appPreferences = AppPreferences()
     
