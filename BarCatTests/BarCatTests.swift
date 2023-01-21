@@ -134,6 +134,6 @@ final class BarCatTests: XCTestCase {
         let identicalPort = Port.sample
         barCatStore.add(identicalPort)
         
-        XCTAssertTrue(barCatStore.portsModel.portsContains(identicalPort))
+        XCTAssertTrue(barCatStore.portCollection.portsContains(identicalPort))
     }
 }
