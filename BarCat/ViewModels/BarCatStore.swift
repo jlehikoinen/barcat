@@ -10,17 +10,17 @@ import SwiftUI
 class BarCatStore: ObservableObject {
     
     @Published var portCollection = PortCollection()
-    @Published var hostsModel = HostCollection()
+    @Published var hostCollection = HostCollection()
     
     // MARK: Host convenience variables
     
     var favoriteHosts: [Host] {
-        get { self.hostsModel.favoriteHosts }
-        set { self.hostsModel.favoriteHosts = newValue }
+        get { self.hostCollection.favoriteHosts }
+        set { self.hostCollection.favoriteHosts = newValue }
     }
     
     var sortedFavoriteHosts: [Host] {
-        self.hostsModel.sortedFavoriteHosts
+        self.hostCollection.sortedFavoriteHosts
     }
     
     // MARK: Port convenience variables
@@ -36,27 +36,27 @@ class BarCatStore: ObservableObject {
     // MARK: Favorite hosts methods
     
     func selectedHostnames(for ids: Set<Host.ID>) -> String {
-        hostsModel.selectedHostnames(for: ids)
+        hostCollection.selectedHostnames(for: ids)
     }
     
     func add(_ host: Host) {
-        hostsModel.add(host)
+        hostCollection.add(host)
     }
     
     func update(_ currentHost: Host, to newHost: Host) {
-        hostsModel.update(currentHost, to: newHost)
+        hostCollection.update(currentHost, to: newHost)
     }
     
     func delete(_ hostIds: Set<Host.ID>) {
-        hostsModel.delete(hostIds)
+        hostCollection.delete(hostIds)
     }
     
     func favoriteHostsContainsPortThatWillBeDeleted(_ portId: Port.ID) -> Bool {
-        hostsModel.favoriteHostsContainsPortThatWillBeDeleted(portId)
+        hostCollection.favoriteHostsContainsPortThatWillBeDeleted(portId)
     }
     
     func validateInput(for host: Host) -> HostValidationStatus {
-        hostsModel.hostValidator(host)
+        hostCollection.hostValidator(host)
     }
     
     // MARK: Port methods

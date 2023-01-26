@@ -44,7 +44,7 @@ struct FavoritesView: View {
                 NSLog("Picker selection: \(String(describing: selectedHostId))")
                 // Selected FavoritesView host => MainHostInputView textfield and port picker
                 // Use id to map correct host using hostsModel subscript and assign it to active host via mainVM
-                mainVM.activeHost = barCatStore.hostsModel[selectedHostId]
+                mainVM.activeHost = barCatStore.hostCollection[selectedHostId]
                 mainVM.animateHostInputFields()
             }
             .disabled(mainVM.commandState == .loading)
