@@ -13,28 +13,28 @@ struct Host {
     var name: String
     var port: Port
     var validationStatus: HostValidationStatus?
-    
-    init() {
-        self.id = UUID().uuidString
-        self.name = ""
-        self.port = Port.default
-    }
-    
-    init(id: String, name: String, port: Port) {
-        self.id = id
-        self.name = name
-        self.port = port
-    }
-    
-    static func < (lhs: Host, rhs: Host) -> Bool {
-        lhs.nameAndPortNumber < rhs.nameAndPortNumber
-    }
 }
 
 extension Host: Identifiable {}
 extension Host: Hashable {}
 extension Host: Codable {}
 extension Host: Comparable {}
+
+extension Host {
+    
+    init() {
+        self.id = UUID().uuidString
+        self.name = ""
+        self.port = Port.default
+    }
+}
+
+extension Host {
+    
+    static func < (lhs: Host, rhs: Host) -> Bool {
+        lhs.nameAndPortNumber < rhs.nameAndPortNumber
+    }
+}
 
 // MARK: Computed vars
 

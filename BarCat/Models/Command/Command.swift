@@ -11,14 +11,12 @@ struct Command {
     
     let exitCode: OSStatus
     let output: String
+}
+
+extension Command {
     
     init() {
         self.exitCode = 0
         self.output = ""
-    }
-    
-    init(exitCode: OSStatus, output: String) {
-        self.exitCode = exitCode
-        self.output = output
     }
 }

@@ -13,28 +13,28 @@ struct Port {
     var number: Int
     var description: String
     var validationStatus: PortValidationStatus?
-    
-    init() {
-        self.id = UUID().uuidString
-        self.number = 1
-        self.description = ""
-    }
-    
-    init(id: String, number: Int, description: String) {
-        self.id = id
-        self.number = number
-        self.description = description
-    }
-    
-    static func < (lhs: Port, rhs: Port) -> Bool {
-        lhs.number < rhs.number
-    }
 }
 
 extension Port: Identifiable {}
 extension Port: Hashable {}
 extension Port: Codable {}
 extension Port: Comparable {}
+
+extension Port {
+    
+    init() {
+        self.id = UUID().uuidString
+        self.number = 1
+        self.description = ""
+    }
+}
+
+extension Port {
+    
+    static func < (lhs: Port, rhs: Port) -> Bool {
+        lhs.number < rhs.number
+    }
+}
 
 // MARK: Computed vars
 

@@ -23,10 +23,6 @@ struct PortCollection {
         ports.sorted { $0.number < $1.number }
     }
     
-//    var allPortNumbers: [Int] {
-//        ports.map(\.number)
-//    }
-    
     // MARK: CRUD methods
     
     mutating func readPorts() {
