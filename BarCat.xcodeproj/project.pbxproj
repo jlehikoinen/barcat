@@ -13,6 +13,7 @@
 		681A7AA1294DEFA500989048 /* PortErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681A7AA0294DEFA500989048 /* PortErrorView.swift */; };
 		681A7AA3294DF14200989048 /* HostnameRowErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681A7AA2294DF14200989048 /* HostnameRowErrorView.swift */; };
 		682D9D982934A5F400DA0D04 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D9D972934A5F400DA0D04 /* AppState.swift */; };
+		682F093A29ABC54F002A064D /* LabeledNumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682F093929ABC54F002A064D /* LabeledNumberField.swift */; };
 		68356609294BA39900F9A9EC /* PortValidationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68356608294BA39900F9A9EC /* PortValidationStatus.swift */; };
 		683881B8293A25C500DB6D91 /* ActiveHostLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683881B7293A25C500DB6D91 /* ActiveHostLocation.swift */; };
 		6838F72428DD81BE005819B7 /* ProcessUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838F72328DD81BE005819B7 /* ProcessUtility.swift */; };
@@ -65,6 +66,7 @@
 		681A7AA0294DEFA500989048 /* PortErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortErrorView.swift; sourceTree = "<group>"; };
 		681A7AA2294DF14200989048 /* HostnameRowErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostnameRowErrorView.swift; sourceTree = "<group>"; };
 		682D9D972934A5F400DA0D04 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		682F093929ABC54F002A064D /* LabeledNumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledNumberField.swift; sourceTree = "<group>"; };
 		68356608294BA39900F9A9EC /* PortValidationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortValidationStatus.swift; sourceTree = "<group>"; };
 		683881B7293A25C500DB6D91 /* ActiveHostLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveHostLocation.swift; sourceTree = "<group>"; };
 		6838F72328DD81BE005819B7 /* ProcessUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessUtility.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				681A7AA0294DEFA500989048 /* PortErrorView.swift */,
 				6840847B297142C000A3FCD1 /* PortPicker.swift */,
 				68F365E02976DFCB00A59E34 /* LabeledTextField.swift */,
+				682F093929ABC54F002A064D /* LabeledNumberField.swift */,
 			);
 			path = AuxViews;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 				6892DDEB2941286F00DA3BB9 /* AppStyle.swift in Sources */,
 				68D1D74B29547D4800C05CC7 /* MainViewModel.swift in Sources */,
 				68858B1C29430453001AFBAD /* NetcatConfiguration.swift in Sources */,
+				682F093A29ABC54F002A064D /* LabeledNumberField.swift in Sources */,
 				68927C4628EEA13C00658DB1 /* BarCatStore.swift in Sources */,
 				68A0C19E2943240400DF3FD5 /* FontCaptionModifiers.swift in Sources */,
 				68C3E1932951893A008FAE94 /* FavoritesEditViewModel.swift in Sources */,

@@ -11,9 +11,7 @@ class PortsEditViewModel: ObservableObject {
     
     @Published var newPort = Port()
     @Published var debouncedNewPort = Port()
-    
-    // Separate workaround variable (String) for port number (Int) handling, default value etc.
-    @Published var portNumberAsString = ""
+    @Published var portNumber: Int?
     
     init() {
         // Delay text input

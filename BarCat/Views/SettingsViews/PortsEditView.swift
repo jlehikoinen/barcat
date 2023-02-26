@@ -106,8 +106,8 @@ struct PortsEditView: View {
         
         VStack(alignment: .leading) {
             HStack {
-                LabeledTextField("Port number", placeholderText: "Add port number", text: $portsEditVM.portNumberAsString)
-                    .onChange(of: portsEditVM.portNumberAsString) { inputValue in
+                LabeledNumberField("Port number", placeholderText: "Add port number", number: $portsEditVM.portNumber)
+                    .onChange(of: portsEditVM.portNumber ?? 0) { inputValue in
                         portInputValidation(inputValue)
                     }
                 LabeledTextField("Description", placeholderText: "Add description", text: $portsEditVM.newPort.description)
@@ -128,21 +128,11 @@ struct PortsEditView: View {
     }
     
     // MARK: View helper methods
-    
-    // Move this to portsEditVM and get rid of barCatStore.validateInput dependency?
-    private func portInputValidation(_ inputValue: String) {
+
+    private func portInputValidation(_ inputValue: Int) {
         
-        /// First check that the input contains only numeric values, revert input to previous value if not
-        let numbers = inputValue.filter { "01234567890".contains($0) }
-        if numbers == inputValue {
-            /// Validation works for Port type but the port number is String
-            /// 0 is assigned as a default value if the text field is empty
-            portsEditVM.newPort.number = Int(inputValue) ?? 0
-            /// Debouncing happens in portsEditVM
-            portsEditVM.newPort.validationStatus = barCatStore.validateInput(for: portsEditVM.newPort)
-        } else {
-            self.portsEditVM.portNumberAsString = numbers
-        }
+        portsEditVM.newPort.number = inputValue
+        portsEditVM.newPort.validationStatus = barCatStore.validateInput(for: portsEditVM.newPort)
     }
     
     private func addNewPort() {
@@ -150,7 +140,7 @@ struct PortsEditView: View {
         barCatStore.add(portsEditVM.newPort)
         
         NSLog("Resetting add new port textfields")
-        portsEditVM.portNumberAsString = ""
+        portsEditVM.portNumber = nil
         portsEditVM.newPort = Port()
     }
     
