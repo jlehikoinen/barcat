@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RegexBuilder
 
 struct Host {
     
@@ -45,8 +46,100 @@ extension Host {
     }
     
     var isValidHostname: Bool {
-        // Compromise between IP address & FQDN
-        let pattern = /[\w-]+\.[\w\.-]+[a-zA-Z0-9]$/
+        isValidIPAddress || isValidFQDN
+    }
+    
+    var isValidIPAddress: Bool {
+        
+        // let pattern = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$/
+        let pattern = Regex {
+            Anchor.startOfLine
+            Repeat(count: 3) {
+                Regex {
+                    ChoiceOf {
+                        Regex {
+                            "25"
+                            ("0"..."5")
+                        }
+                        Regex {
+                            "2"
+                            ("0"..."4")
+                            ("0"..."9")
+                        }
+                        Regex {
+                            "1"
+                            ("0"..."9")
+                            ("0"..."9")
+                        }
+                        Regex {
+                            ("1"..."9")
+                            ("0"..."9")
+                        }
+                        ("0"..."9")
+                    }
+                    "."
+                }
+            }
+            ChoiceOf {
+                Regex {
+                    "25"
+                    ("0"..."5")
+                }
+                Regex {
+                    "2"
+                    ("0"..."4")
+                    ("0"..."9")
+                }
+                Regex {
+                    "1"
+                    ("0"..."9")
+                    ("0"..."9")
+                }
+                Regex {
+                    ("1"..."9")
+                    ("0"..."9")
+                }
+                ("0"..."9")
+            }
+            Anchor.endOfLine
+        }
+        NSLog("\"\(name)\" is valid IP address: \(self.name.starts(with: pattern))")
+        return self.name.starts(with: pattern)
+    }
+    
+    var isValidFQDN: Bool {
+        
+        // let pattern = /^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,}$/
+        let pattern = Regex {
+            Anchor.startOfLine
+            OneOrMore {
+                CharacterClass(
+                    ("a"..."z"),
+                    ("0"..."9")
+                )
+            }
+            ZeroOrMore {
+                Capture {
+                    Regex {
+                        Repeat(count: 1) {
+                            One(.anyOf("-."))
+                        }
+                        OneOrMore {
+                            CharacterClass(
+                                ("a"..."z"),
+                                ("0"..."9")
+                            )
+                        }
+                    }
+                }
+            }
+            "."
+            Repeat(2...) {
+                ("a"..."z")
+            }
+            Anchor.endOfLine
+        }
+        NSLog("\"\(name)\" is valid FQDN: \(self.name.starts(with: pattern))")
         return self.name.starts(with: pattern)
     }
     
